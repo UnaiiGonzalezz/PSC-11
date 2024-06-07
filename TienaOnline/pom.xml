@@ -1,100 +1,103 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	
-	<modelVersion>4.0.0</modelVersion>
-	
-	<groupId>org.datanucleus</groupId>
-	<artifactId>datanucleus-jersey-jdo-mysql</artifactId>
-	<packaging>war</packaging>
-	<version>1.0-SNAPSHOT</version>
-	<name>Jersey + Datanucleus + MySQL</name>
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<properties>
-		<maven.compiler.release>8</maven.compiler.release>
-		<config.files.dir>${basedir}/src/main/resources</config.files.dir>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jersey.version>2.35</jersey.version>
-		<server.hostname>127.0.0.1</server.hostname>
-		<server.port>8080</server.port>
-	</properties>
+    <modelVersion>4.0.0</modelVersion>
 
-	<dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.glassfish.jersey</groupId>
-                <artifactId>jersey-bom</artifactId>
-                <version>${jersey.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.2.5</version>
+        <relativePath /> <!-- lookup parent from repository -->
+    </parent>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.datanucleus</groupId>
-			<artifactId>javax.jdo</artifactId>
-			<version>[3.2.0-release, )</version>
-		</dependency>
-		<dependency>
-			<groupId>org.datanucleus</groupId>
-			<artifactId>datanucleus-core</artifactId>
-			<version>[6.0.0-m1, 6.9)</version>
-		</dependency>
-		<dependency>
-			<groupId>org.datanucleus</groupId>
-			<artifactId>datanucleus-api-jdo</artifactId>
-			<version>[6.0.0-m1, 6.9)</version>
-		</dependency>
-		<dependency>
-			<groupId>org.datanucleus</groupId>
-			<artifactId>datanucleus-rdbms</artifactId>
-			<version>[6.0.0-m1, 6.9)</version>
-		</dependency>
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.29</version>
-		</dependency>
-		<dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>[2.17.1, )</version>
+    <groupId>com.example</groupId>
+    <artifactId>PSCG5</artifactId>
+    <version>1.0.0</version>
+
+    <properties>
+        <java.version>17</java.version>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+		<sonar.organization>unamordiditaoso</sonar.organization>
+  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+    </properties>
+
+    <dependencies>
+        <!-- Aquí puedes agregar las dependencias de tu proyecto -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
 		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>[2.17.1, )</version>
+				<groupId>org.databene</groupId>
+				<artifactId>contiperf</artifactId>
+				<version>2.3.4</version>
+				<scope>test</scope>
 		</dependency>
-
-		<dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-servlet-core</artifactId>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.glassfish.jersey.inject</groupId>
-            <artifactId>jersey-hk2</artifactId>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
         </dependency>
-         <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-json-jackson</artifactId>
+        <!-- Dependecias para la DB -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-community-dialects</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.25.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+                <groupId>org.json</groupId>
+                <artifactId>json</artifactId>
+                <version>20230618</version>
+        </dependency>
+    
+    <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>5.11.0</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+            <groupId>org.mockito</groupId>
+            <!--enables mock of static methods -->
+            <artifactId>mockito-inline</artifactId>
+            <version>4.6.0</version>
+            <scope>test</scope>
+    </dependency>
+    <!--DEPENDENCIAS NUEVAS MOCKTIO-->
 
-	<build>
-		<resources>
-			<resource>
-				<directory>${config.files.dir}</directory>
-				<includes>
-					<include>**/*.jdo</include>
-					<include>**/*.orm</include>
-					<include>**/*.properties</include>
-				</includes>
-			</resource>
-		</resources>
-
-		<plugins>
+    <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+		<version>4.13.2</version>
+        <scope>test</scope>
+    </dependency>
+    </dependencies>
+    <build>
+        <plugins>
 			<plugin>
 				<artifactId>maven-clean-plugin</artifactId>
 				<version>3.2.0</version>
@@ -113,7 +116,7 @@
 
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
+				<version>3.10.1</version>
 			</plugin>
 
 			<plugin>
@@ -131,23 +134,7 @@
 					<verbose>true</verbose>
 					<props>${config.files.dir}/datanucleus.properties</props>
 				</configuration>
-				<executions>
-					<execution>
-						<!-- links the enhance to the compile phase -->
-						<phase>compile</phase>
-						<goals>
-							<goal>enhance</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
-
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.4.46.v20220331</version>
-            </plugin>
-
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
@@ -157,52 +144,72 @@
 					<mainClass>org.datanucleus.samples.jdo.tutorial.Main</mainClass>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>maven-assembly-plugin</artifactId>
-				<configuration>
-					<descriptors>
-						<descriptor>${basedir}/assembly.xml</descriptor>
-					</descriptors>
-				</configuration>
-			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>3.0.0</version>
+				<version>3.6.3</version>
 				<configuration>
 					<show>private</show>
 					<nohelp>true</nohelp>
 				</configuration>
 			</plugin>
-		</plugins>
-	</build>
 
-	<profiles>
-		<profile>
-			<id>client</id>
-			<build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <version>1.2.1</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>java</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                        <configuration>
-                            <mainClass>es.deusto.spq.client.ExampleClient</mainClass>
-							<arguments>
-								<argument>${server.hostname}</argument>
-								<argument>${server.port}</argument>
-							</arguments>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-		</profile>
-	</profiles>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+      			<groupId>org.apache.maven.plugins</groupId>
+      			<artifactId>maven-surefire-plugin</artifactId>
+      			<version>3.0.0-M5</version>
+      				<dependencies>
+        				<dependency>
+            				<groupId>org.apache.maven.surefire</groupId>
+            				<artifactId>surefire-junit47</artifactId>
+            				<version>3.0.0-M5</version>
+         				</dependency>
+      				</dependencies>
+   			</plugin>
+
+			
+      		<plugin>
+            	<groupId>org.jacoco</groupId>
+            	<artifactId>jacoco-maven-plugin</artifactId>
+            	<version>0.8.12</version>
+            	<executions>
+                	<execution>
+                    	<goals>
+                        	<goal>prepare-agent</goal>
+                    	</goals>
+               	 	</execution>
+                	<!-- attached to Maven test phase -->
+                	<execution>
+                    	<id>report</id>
+                    	<phase>test</phase>
+                    	<goals>
+                        	<goal>report</goal>
+                    	</goals>
+                	</execution>
+            	</executions>
+        	</plugin>
+			<plugin>
+			<groupId>com.soebes.maven.plugins</groupId>
+			<artifactId>doxygen-maven-plugin</artifactId>
+			<version>1.1.0</version>
+			<configuration>
+				<configurationFile>Doxyfile</configurationFile>
+			</configuration>
+			</plugin>
+        </plugins>
+    </build>
 </project>

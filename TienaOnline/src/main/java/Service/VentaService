@@ -1,0 +1,101 @@
+package psc11.tienaonline.service;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import psc11.tienaonline.DataDomain.Plato;
+import psc11.tienaonline.DataDomain.PlatoRepository;
+import psc11.tienaonline.DataDomain.Usuario;
+import psc11.tienaonline.DataDomain.UsuarioRepository;
+import psc11.tienaonline.DataDomain.Venta;
+import psc11.tienaonline.DataDomain.VentaRepository;
+
+@Service
+public class VentaService {
+
+    private final VentaRepository ventaRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final PlatoRepository platoRepository;
+    private final String connectionString;
+
+    @Autowired
+    public VentaService(VentaRepository ventaRepository, UsuarioRepository usuarioRepository, PlatoRepository platoRepository) {
+        this.ventaRepository = ventaRepository;
+        this.usuarioRepository = usuarioRepository;
+        this.platoRepository = platoRepository;
+        this.connectionString = "jdbc:sqlite:TienaOnline.db";
+        loadDatos();
+    }
+
+    /** @brief Carga todas las ventas de la base de datos y las guarda en el repositorio de ventas */
+    public void loadDatos() {
+        String sql = "SELECT * FROM venta";
+
+        try (Connection con = DriverManager.getConnection(connectionString);
+             PreparedStatement pStmt = con.prepareStatement(sql);
+             ResultSet rs = pStmt.executeQuery()) {
+
+            while (rs.next()) {
+                Usuario usuario = usuarioRepository.findById(rs.getInt("usuario_id")).orElse(null);
+                Plato plato = platoRepository.findById(rs.getInt("plato_id")).orElse(null);
+
+                if (usuario != null && plato != null) {
+                    Venta venta = new Venta(
+                        usuario,
+                        plato,
+                        rs.getTimestamp("fecha").toLocalDateTime(),
+                        rs.getInt("cantidad"),
+                        rs.getDouble("total")
+                    );
+                    venta.setId(rs.getInt("id"));
+                    ventaRepository.save(venta);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Log the exception for debugging purposes
+        }
+    }
+
+    public Venta getVenta(int id) {
+        return ventaRepository.findById(id).orElse(null);
+    }
+
+    public List<Venta> getAllVentas() {
+        return ventaRepository.findAll();
+    }
+
+    public List<Venta> getVentasByUsuario(Usuario usuario) {
+        return ventaRepository.findByUsuario(usuario);
+    }
+
+    public List<Venta> getVentasByPlato(Plato plato) {
+        return ventaRepository.findByPlato(plato);
+    }
+
+    public Venta addVenta(Venta venta) {
+        return ventaRepository.save(venta);
+    }
+
+    public Venta updateVenta(Venta venta, int id) {
+        return ventaRepository.findById(id).map(existingVenta -> {
+            existingVenta.setUsuario(venta.getUsuario());
+            existingVenta.setPlato(venta.getPlato());
+            existingVenta.setFecha(venta.getFecha());
+            existingVenta.setCantidad(venta.getCantidad());
+            existingVenta.setTotal(venta.getTotal());
+            return ventaRepository.save(existingVenta);
+        }).orElse(null);
+    }
+
+    public void deleteVenta(int id) {
+        ventaRepository.findById(id).ifPresent(ventaRepository::delete);
+    }
+}

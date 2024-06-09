@@ -1,0 +1,131 @@
+package psc11.tienaonline.Ventanas;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JButton;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.ImageIcon;
+import javax.swing.border.EmptyBorder;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import spq.client.TheClient;
+import spq.jdo.User;
+
+public class LoginWindow extends JFrame {
+
+    private static final long serialVersionUID = 1L;
+
+    private JPanel contentPane;
+    private JTextField textUser;
+    private JPasswordField textPassword;
+
+    public LoginWindow() {
+        setTitle("Tienda de Comida Online - Inicio de Sesión");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 450, 300);
+        contentPane = new JPanel();
+        contentPane.setBackground(new Color(255, 250, 250));
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+
+        JLabel lblTitle = new JLabel("Tienda de Comida Online");
+        lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
+        lblTitle.setFont(new Font("Tahoma", Font.BOLD, 20));
+        lblTitle.setBounds(10, 11, 414, 30);
+        contentPane.add(lblTitle);
+
+        JLabel lblUser = new JLabel("Usuario:");
+        lblUser.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        lblUser.setBounds(50, 80, 100, 25);
+        contentPane.add(lblUser);
+
+        textUser = new JTextField();
+        textUser.setBounds(150, 80, 200, 25);
+        contentPane.add(textUser);
+        textUser.setColumns(10);
+
+        JLabel lblPassword = new JLabel("Contraseña:");
+        lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        lblPassword.setBounds(50, 130, 100, 25);
+        contentPane.add(lblPassword);
+
+        textPassword = new JPasswordField();
+        textPassword.setBounds(150, 130, 200, 25);
+        contentPane.add(textPassword);
+
+        JButton btnLogIn = new JButton("Iniciar Sesión");
+        btnLogIn.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btnLogIn.setBackground(new Color(0, 204, 102));
+        btnLogIn.setForeground(Color.WHITE);
+        btnLogIn.setBounds(50, 180, 300, 30);
+        contentPane.add(btnLogIn);
+
+        JButton btnRegister = new JButton("Registrarse");
+        btnRegister.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        btnRegister.setBackground(new Color(0, 102, 204));
+        btnRegister.setForeground(Color.WHITE);
+        btnRegister.setBounds(50, 220, 300, 30);
+        contentPane.add(btnRegister);
+
+        btnLogIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String hostname = "localhost";
+                String port = "8080";
+
+                TheClient newClient = new TheClient(hostname, port);
+                String username = textUser.getText();
+                String password = new String(textPassword.getPassword());
+
+                User u = newClient.loginUser(username, password);
+
+                if (u != null) {
+                    dispose();
+                    if (u.getType() == 0) {
+                        MainWindowUser w_user = new MainWindowUser(u);
+                        w_user.setVisible(true);
+                    } else if (u.getType() == 1) {
+                        MainWindowAdmin w_admin = new MainWindowAdmin();
+                        w_admin.setVisible(true);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(contentPane, "Credenciales inválidas", "Error de inicio de sesión", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        btnRegister.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new RegisterWindow();
+                dispose();
+            }
+        });
+
+        setLocationRelativeTo(null);
+    }
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    LoginWindow window = new LoginWindow();
+                    window.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+}

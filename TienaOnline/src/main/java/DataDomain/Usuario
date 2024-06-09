@@ -1,0 +1,97 @@
+package psc11.tienaonline.DataDomain;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+
+@Entity
+@Table(name = "Usuario")
+public class Usuario {
+
+    public enum TipoUsuario {
+        ADMINISTRADOR,
+        CLIENTE
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "nombre", nullable = false)
+    private String nombre;
+
+    @Column(name = "contraseña", nullable = false)
+    private String contrasenya;
+
+    @Column(name = "saldo", nullable = false)
+    private double saldo;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipoUsuario", nullable = false)
+    private TipoUsuario tipoUsuario;
+
+    public Usuario(String nombre, String contrasenya, double saldo, TipoUsuario tipoUsuario) {
+        this.nombre = nombre;
+        this.contrasenya = contrasenya;
+        this.saldo = saldo;
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    protected Usuario() {
+        this.nombre = "";
+        this.contrasenya = "";
+        this.saldo = 0.0;
+        this.tipoUsuario = TipoUsuario.CLIENTE; 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getContrasenya() {
+        return contrasenya;
+    }
+
+    public void setContrasenya(String contrasenya) {
+        this.contrasenya = contrasenya;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+    public TipoUsuario getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(TipoUsuario tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario [id=" + id + ", nombre=" + nombre + ", saldo=" + saldo + "]";
+    }
+}

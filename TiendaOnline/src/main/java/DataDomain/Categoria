@@ -1,0 +1,3 @@
+public enum Categoria {
+Primero, Segundo, Postre, Batido, Entrante
+}

@@ -1,0 +1,81 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class VentanaAdministrador extends JFrame {
+
+    public VentanaAdministrador() {
+        // Configuracion basica de la ventana
+        setTitle("Ventana del Administrador");
+        setSize(800, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        
+        // Crear el panel principal
+        JPanel panelPrincipal = new JPanel();
+        panelPrincipal.setLayout(new BorderLayout());
+        getContentPane().add(panelPrincipal);
+        
+        // Crear un panel de control en la parte superior
+        JPanel panelControl = new JPanel();
+        panelControl.setLayout(new FlowLayout());
+        
+        // Botones de control
+        JButton btnAgregarProducto = new JButton("Agregar Producto");
+        JButton btnEliminarProducto = new JButton("Eliminar Producto");
+        
+        
+        // Agregar botones al panel de control
+        panelControl.add(btnAgregarProducto);
+        panelControl.add(btnEliminarProducto);
+      
+        
+        // Agregar el panel de control al panel principal
+        panelPrincipal.add(panelControl, BorderLayout.NORTH);
+        
+        // Area de texto para mostrar informacion
+        JTextArea areaTexto = new JTextArea();
+        areaTexto.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(areaTexto);
+        panelPrincipal.add(scrollPane, BorderLayout.CENTER);
+        
+        // Accion para el boton "Agregar Producto"
+        btnAgregarProducto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Aqui puedes agregar la logica para agregar un producto
+                String nuevoProducto = JOptionPane.showInputDialog("Ingrese el nombre del nuevo producto:");
+                if (nuevoProducto != null && !nuevoProducto.isEmpty()) {
+                    // Aqui se puede agregar el producto a la base de datos o lista de productos
+                    areaTexto.append("Producto agregado: " + nuevoProducto + "\n");
+                }
+            }
+        });
+        
+        // Accion para el boton "Eliminar Producto"
+        btnEliminarProducto.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Aquí puedes agregar la lógica para eliminar un producto
+                String productoAEliminar = JOptionPane.showInputDialog("Ingrese el nombre del producto a eliminar:");
+                if (productoAEliminar != null && !productoAEliminar.isEmpty()) {
+                    // Aquí se puede eliminar el producto de la base de datos o lista de productos
+                    areaTexto.append("Producto eliminado: " + productoAEliminar + "\n");
+                }
+            }
+        });
+        
+        
+    }
+
+    public static void main(String[] args) {
+        // Crear y mostrar la ventana del administrador
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new VentanaAdministrador().setVisible(true);
+            }
+        });
+    }
+}

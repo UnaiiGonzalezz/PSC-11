@@ -1,0 +1,114 @@
+package psc11.tienaonline.Ventanas;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import spq.client.TheClient;
+
+import javax.swing.JButton;
+import javax.swing.JTextField;
+
+public class RegisterWindow extends JFrame {
+
+    private static final long serialVersionUID = 1L;
+
+    private JPanel contentPane;
+    private JLabel labelName = new JLabel();
+    private JLabel labelPassword = new JLabel();
+    private JTextField textName = new JTextField();
+    private JPasswordField textPassword = new JPasswordField();
+    private JButton btnRegister = new JButton();
+    private JButton btnLogIn = new JButton();
+
+    public RegisterWindow() {
+
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+
+        JLabel labelTitle = new JLabel("Tienda de Comida Online");
+        labelTitle.setFont(new Font("Tahoma", Font.BOLD, 30));
+        labelTitle.setHorizontalAlignment(SwingConstants.CENTER);
+        labelTitle.setBounds(10, 20, 414, 50);
+        contentPane.add(labelTitle);
+
+        // nombre usuario
+        labelName.setText("Nombre:");
+        labelName.setBounds(50, 100, 100, 25);
+        labelName.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        contentPane.add(labelName);
+
+        textName.setBounds(160, 100, 200, 25);
+        contentPane.add(textName);
+
+        // contraseña
+        labelPassword.setText("Contraseña:");
+        labelPassword.setBounds(50, 150, 100, 25);
+        labelPassword.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        contentPane.add(labelPassword);
+
+        textPassword.setBounds(160, 150, 200, 25);
+        contentPane.add(textPassword);
+
+        // Botón registrarse
+        btnRegister.setForeground(SystemColor.text);
+        btnRegister.setBackground(new Color(0, 153, 51));
+        btnRegister.setBounds(50, 200, 310, 30);
+        btnRegister.setText("Registrarse");
+        btnRegister.setFont(new Font("Tahoma", Font.BOLD, 16));
+        contentPane.add(btnRegister);
+
+        // Botón para volver a inicio sesión
+        btnLogIn.setBackground(SystemColor.inactiveCaptionBorder);
+        btnLogIn.setBounds(50, 250, 310, 30);
+        btnLogIn.setText("<< Iniciar Sesión");
+        btnLogIn.setFont(new Font("Tahoma", Font.BOLD, 16));
+        contentPane.add(btnLogIn);
+
+        // Acción de botón registrarse
+        btnRegister.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String hostname = "localhost";
+                String port = "8080";
+
+                TheClient newClient = new TheClient(hostname, port);
+                newClient.registerUser(textName.getText(), new String(textPassword.getPassword()), 0.0, 0);
+                JOptionPane.showMessageDialog(contentPane, "Usuario registrado con éxito", "Registro", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+        // Acción de botón volver a inicio sesión
+        btnLogIn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new LoginWindow();
+                dispose();
+            }
+        });
+
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(450, 350);
+        setVisible(true);
+        setLocationRelativeTo(null);
+        setTitle("Registro de Nuevo Usuario");
+    }
+
+    public static void main(String[] args) {
+        new RegisterWindow();
+    }
+}
+

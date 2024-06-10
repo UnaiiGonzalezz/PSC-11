@@ -1,8 +1,8 @@
-package psc11.tienaonline.Ventanas;
+package java.Ventanas;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
+import javax.swing.JVentanaRegistro;
+import javax.swing.JContrasenyaField;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -15,87 +15,87 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import spq.client.TheClient;
+
 
 import javax.swing.JButton;
 import javax.swing.JTextField;
 
-public class RegisterWindow extends JFrame {
+public class VentanaRegistro extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
-    private JPanel contentPane;
-    private JLabel labelName = new JLabel();
-    private JLabel labelPassword = new JLabel();
-    private JTextField textName = new JTextField();
-    private JPasswordField textPassword = new JPasswordField();
-    private JButton btnRegister = new JButton();
-    private JButton btnLogIn = new JButton();
+    private JVentanaRegistro panel;
+    private JLabel labelNombre = new JLabel();
+    private JLabel labelContrasenya = new JLabel();
+    private JTextField textNombre = new JTextField();
+    private JContrasenyaField textContrasenya = new JContrasenyaField();
+    private JButton btnRegistro = new JButton();
+    private JButton btnInicioSesion = new JButton();
 
-    public RegisterWindow() {
+    public VentanaRegistro() {
 
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
-        contentPane.setLayout(null);
+        panel = new JVentanaRegistro();
+        panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setpanel(panel);
+        panel.setLayout(null);
 
-        JLabel labelTitle = new JLabel("Tienda de Comida Online");
-        labelTitle.setFont(new Font("Tahoma", Font.BOLD, 30));
-        labelTitle.setHorizontalAlignment(SwingConstants.CENTER);
-        labelTitle.setBounds(10, 20, 414, 50);
-        contentPane.add(labelTitle);
+        JLabel labelTitulo = new JLabel("Tienda de Comida Online");
+        labelTitulo.setFont(new Font("Tahoma", Font.BOLD, 30));
+        labelTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+        labelTitulo.setBounds(10, 20, 414, 50);
+        panel.add(labelTitulo);
 
         // nombre usuario
-        labelName.setText("Nombre:");
-        labelName.setBounds(50, 100, 100, 25);
-        labelName.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        contentPane.add(labelName);
+        labelNombre.setText("Nombre:");
+        labelNombre.setBounds(50, 100, 100, 25);
+        labelNombre.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        panel.add(labelNombre);
 
-        textName.setBounds(160, 100, 200, 25);
-        contentPane.add(textName);
+        textNombre.setBounds(160, 100, 200, 25);
+        panel.add(textNombre);
 
         // contraseña
-        labelPassword.setText("Contraseña:");
-        labelPassword.setBounds(50, 150, 100, 25);
-        labelPassword.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        contentPane.add(labelPassword);
+        labelContrasenya.setText("Contraseña:");
+        labelContrasenya.setBounds(50, 150, 100, 25);
+        labelContrasenya.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        panel.add(labelContrasenya);
 
-        textPassword.setBounds(160, 150, 200, 25);
-        contentPane.add(textPassword);
+        textContrasenya.setBounds(160, 150, 200, 25);
+        panel.add(textContrasenya);
 
         // Botón registrarse
-        btnRegister.setForeground(SystemColor.text);
-        btnRegister.setBackground(new Color(0, 153, 51));
-        btnRegister.setBounds(50, 200, 310, 30);
-        btnRegister.setText("Registrarse");
-        btnRegister.setFont(new Font("Tahoma", Font.BOLD, 16));
-        contentPane.add(btnRegister);
+        btnRegistro.setForeground(SystemColor.text);
+        btnRegistro.setBackground(new Color(0, 153, 51));
+        btnRegistro.setBounds(50, 200, 310, 30);
+        btnRegistro.setText("Registrarse");
+        btnRegistro.setFont(new Font("Tahoma", Font.BOLD, 16));
+        panel.add(btnRegistro);
 
         // Botón para volver a inicio sesión
-        btnLogIn.setBackground(SystemColor.inactiveCaptionBorder);
-        btnLogIn.setBounds(50, 250, 310, 30);
-        btnLogIn.setText("<< Iniciar Sesión");
-        btnLogIn.setFont(new Font("Tahoma", Font.BOLD, 16));
-        contentPane.add(btnLogIn);
+        btnInicioSesion.setBackground(SystemColor.inactiveCaptionBorder);
+        btnInicioSesion.setBounds(50, 250, 310, 30);
+        btnInicioSesion.setText("<< Iniciar Sesión");
+        btnInicioSesion.setFont(new Font("Tahoma", Font.BOLD, 16));
+        panel.add(btnInicioSesion);
 
         // Acción de botón registrarse
-        btnRegister.addActionListener(new ActionListener() {
+        btnRegistro.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String hostname = "localhost";
+                String hostNombre = "localhost";
                 String port = "8080";
 
-                TheClient newClient = new TheClient(hostname, port);
-                newClient.registerUser(textName.getText(), new String(textPassword.getPassword()), 0.0, 0);
-                JOptionPane.showMessageDialog(contentPane, "Usuario registrado con éxito", "Registro", JOptionPane.INFORMATION_MESSAGE);
+                //TheClient nuevoCliente = new TheClient(hostNombre, port);
+                //nuevoCliente.RegistroUser(textNombre.getText(), new String(textContrasenya.getContrasenya()), 0.0, 0);
+                //JOptionPane.showMessageDialog(panel, "Usuario registrado con éxito", "Registro", JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
         // Acción de botón volver a inicio sesión
-        btnLogIn.addActionListener(new ActionListener() {
+        btnInicioSesion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new LoginWindow();
+                new VentanaInicioSesion();
                 dispose();
             }
         });
@@ -104,11 +104,11 @@ public class RegisterWindow extends JFrame {
         setSize(450, 350);
         setVisible(true);
         setLocationRelativeTo(null);
-        setTitle("Registro de Nuevo Usuario");
+        setTitulo("Registro de Nuevo Usuario");
     }
 
     public static void main(String[] args) {
-        new RegisterWindow();
+        new VentanaRegistro();
     }
 }
 

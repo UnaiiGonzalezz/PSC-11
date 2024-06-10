@@ -1,4 +1,3 @@
-package psc5.deustoimperiomoda.DataDomain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

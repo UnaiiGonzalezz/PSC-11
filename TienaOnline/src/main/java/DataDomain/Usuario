@@ -1,4 +1,3 @@
-package psc11.tienaonline.DataDomain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

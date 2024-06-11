@@ -10,8 +10,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import psc11.tiendaOnline.DataDomain.Plato;
+import psc11.tiendaOnline.Dao.PlatoRepository;
 import psc11.tiendaOnline.DataDomain.Categoria;
-import psc11.tiendaOnline.PlatoRepository;
+
 
 @Service
 public class PlatoService {
@@ -20,7 +21,7 @@ private PlatoRepository platoRepository;
 private String connectionString;
 
     public PlatoService(PlatoRepository platoRepository1){
-        this.platoRepository = paltoRepository1;
+        this.platoRepository = platoRepository1;
         connectionString = "jdbc:sqlite:TiendaOnline.db";
         loadDatos();
     }

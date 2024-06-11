@@ -15,6 +15,7 @@ import psc11.tiendaOnline.Dao.PedidoRepository;
 import psc11.tiendaOnline.DataDomain.Estado;
 import psc11.tiendaOnline.DataDomain.Pedido;
 import psc11.tiendaOnline.DataDomain.Usuario;
+import psc11.tiendaOnline.DataDomain.Venta;
 
 
 @Service
@@ -80,14 +81,14 @@ public class PedidoService {
      *  @return Devuelve el pedido si coincide con el id
      */
 
-    public Pedido getPedido(int id){
-        Pedido result = pedidoRepository.findById(id);
+    public Venta getPedido(int id){
+        Venta result = pedidoRepository.findById(id);
         
         return result;
     }
 
  
-    public List<Pedido> getAllPedidos() {
+    public List<Venta> getAllPedidos() {
         return pedidoRepository.findAll();
     }
 
@@ -98,8 +99,8 @@ public class PedidoService {
     }
 
 
-    public Pedido updatePedido(Pedido pedido, int idPedido){
-        Pedido updatedPedido = pedidoRepository.findById(idPedido);
+    public Venta updatePedido(Pedido pedido, int idPedido){
+        Venta updatedPedido = pedidoRepository.findById(idPedido);
     
         if (updatedPedido != null) {
             updatedPedido.setEstado(pedido.getEstado());

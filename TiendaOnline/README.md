@@ -1,30 +1,11 @@
-Jersey + DataNucleus + MySQL
-============================
 
-This example relies on the DataNucleus Maven plugin. Check the database configuration in the *datanucleus.properties* file and the JDBC driver dependency specified in the *pom.xml* file. In addition, the project contains the server and client example codes.
+## Ejecución del Proyecto
 
-Run the following command to build everything and enhance the DB classes:
+Para ejecutar el proyecto, puedes seguir estos pasos:
 
-      mvn clean compile
+1. Clona el repositorio a tu máquina local.
+2. Asegúrate de tener Maven instalado.
+3. Abre una terminal y navega hasta el directorio raíz del proyecto.
+4. Ejecuta el comando `mvn spring-boot:run`.
+5. La aplicación se ejecutará y estará disponible en `http://localhost:8080`.
 
-Make sure that the database was correctly configured. Use the contents of the file *create-message.sql* to create the database and grant privileges. For example,
-
-      mysql –uroot -p < sql/create-messages.sql
-
-Run the following command to create database schema for this sample.
-
-      mvn datanucleus:schema-create
-
-To launch the server run the command
-
-    mvn jetty:run
-
-Now, the client sample code can be executed in a new command window with
-
-    mvn exec:java -Pclient
-
-
-Herramientas implementadas:
-      - Maven wrapper
-      -github action
-      

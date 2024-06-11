@@ -1,0 +1,87 @@
+package java.Ventanas;
+
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+
+public class VentanaTablaClientes extends JFrame {
+
+    private static final long serialVersionUID = 1L;
+    private JButton btnAtras = new JButton("Atrás");
+    private JPanel contentPane;
+    private JTable tabla;
+
+    public VentanaTablaClientes() {
+        // iniciar contexto de Spring
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
+        UserService userService = context.getBean(UserService.class);
+
+        setTitle("Ver Usuarios");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 450, 300);
+        contentPane = new JPanel();
+        contentPane.setBackground(new Color(220, 220, 220)); // gris claro
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(new BorderLayout(0, 0));
+
+        btnAtras.setBounds(10, 10, 89, 23);
+        contentPane.add(btnAtras, BorderLayout.NORTH);
+
+        // Obtener datos de los usuarios 
+        List<UserData> usuarios = userService.getUsers();
+
+        // Crear tabla con los datos 
+        String[] nombresColumnas = { "Nombre", "Contraseña" };
+        Object[][] datos = new Object[usuarios.size()][2];
+        for (int i = 0; i < usuarios.size(); i++) {
+            datos[i][0] = usuarios.get(i).getName();
+            datos[i][1] = usuarios.get(i).getPassword();
+        }
+
+        tabla = new JTable(datos, nombresColumnas);
+
+        // Agregar tabla a un JScrollPane para permiti desplazamiento
+        JScrollPane scrollPane = new JScrollPane(tabla);
+        contentPane.add(scrollPane, BorderLayout.CENTER);
+
+        btnAtras.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new VentanaAgregarProducto().setVisible(true);
+                dispose();
+            }
+        });
+
+        setSize(440, 600);
+        setLocationRelativeTo(null);
+        setVisible(true);
+
+        // Cerrar contexto al salir
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                context.close();
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    VentanaTablaClientes ventana = new VentanaTablaClientes();
+                    ventana.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+}
+

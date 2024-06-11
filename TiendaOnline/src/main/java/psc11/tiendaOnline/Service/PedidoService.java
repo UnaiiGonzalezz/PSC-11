@@ -1,4 +1,6 @@
 package psc11.tiendaOnline.Service;
+
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,16 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import psc11.tiendaOnline.DataDomain.Plato;
-import psc11.tiendaOnline.Dao.PedidoRepository;
 import psc11.tiendaOnline.DataDomain.Estado;
 import psc11.tiendaOnline.DataDomain.Pedido;
 import psc11.tiendaOnline.DataDomain.Usuario;
-import psc11.tiendaOnline.DataDomain.Venta;
-
+import psc11.tiendaOnline.Dao.PedidoRepository;
 
 @Service
 public class PedidoService {
-    private final psc11.tiendaOnline.Dao.PedidoRepository pedidoRepository;
+    private final PedidoRepository pedidoRepository;
     private final PlatoService platoService;
     private final String connectionString;
 
@@ -32,6 +32,8 @@ public class PedidoService {
         loadDatos();
     }
 
+    /** @brief Carga todos los pedidos de la base de datos y los guarda en el repositorio de pedidos
+     */
 
     public void loadDatos(){
         String sql = "SELECT * FROM pedido";
@@ -40,11 +42,10 @@ public class PedidoService {
     
             ResultSet rs = pStmt.executeQuery();
             while(rs.next()) {
-                Usuario usuario = new Usuario(); 
-                Estado estado = Estado.valueOf(rs.getString("estado")); 
-                
+                Usuario usuario = new Usuario(); // Necesitas obtener el usuario de alguna manera
+                Estado estado = Estado.valueOf(rs.getString("estado")); // Asumiendo que "estado" es un enum
+                // Obtén el ID del pedido
                 int idPedido = rs.getInt("ID_ped");
-             
                 List<Plato> platos = loadPlatosbyPedido(idPedido);
                 Pedido pedido = new Pedido(usuario, platos, estado);
             }
@@ -53,6 +54,8 @@ public class PedidoService {
         }
     }
 
+    /** @brief Carga todos los artículos de la base de datos por pedido
+     */
 
     private List<Plato> loadPlatosbyPedido(int idPedido) throws SQLException {
         List<Plato> platos = new ArrayList<>();
@@ -69,6 +72,7 @@ public class PedidoService {
             ResultSet rs = pStmt.executeQuery();
     
             while (rs.next()) {
+                
                 Plato plato = platoService.getPlato(rs.getInt("id_Plato"));
                 platos.add(plato);
             }
@@ -81,26 +85,36 @@ public class PedidoService {
      *  @return Devuelve el pedido si coincide con el id
      */
 
-    public Venta getPedido(int id){
-        Venta result = pedidoRepository.findById(id);
+    public Pedido getPedido(int id){
+        Pedido result = pedidoRepository.findById(id);
         
         return result;
     }
 
- 
-    public List<Venta> getAllPedidos() {
+    /** @brief Coge todos los pedidos
+     *  @return Lista de los todos los pedidos del repositorio
+     */
+
+    public List<Pedido> getAllPedidos() {
         return pedidoRepository.findAll();
     }
 
- 
+    /** @brief Añade un pedido al repositorio
+     *  @retval True Pedido correctamente añadido
+     *  @retval False Pedido no añadido
+     */
 
     public Pedido addPedido(Pedido pedido){
         return pedidoRepository.save(pedido);
     }
 
+    /** @brief Actualiza un pedido del id enviado
+     *  @return El pedido actualizado
+     */
 
-    public Venta updatePedido(Pedido pedido, int idPedido){
-        Venta updatedPedido = pedidoRepository.findById(idPedido);
+
+    public Pedido updatePedido(Pedido pedido, int idPedido){
+        Pedido updatedPedido = pedidoRepository.findById(idPedido);
     
         if (updatedPedido != null) {
             updatedPedido.setEstado(pedido.getEstado());

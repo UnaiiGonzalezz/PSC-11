@@ -9,8 +9,8 @@ import psc11.tiendaOnline.DataDomain.Pedido;
 import psc11.tiendaOnline.DataDomain.Usuario;
 
 @Repository
-public interface PedidoRepository extends JpaRepository<Venta, Integer>{
-    Venta findById(int id);
-    Venta findByUsuario(Usuario usuario);
-    Pedido save(Pedido pedido);
+public interface PedidoRepository extends JpaRepository<Pedido, Integer>{
+    Pedido findById(int id);
+    Pedido findByUsuario(Usuario usuario);
+    
 }

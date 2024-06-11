@@ -1,4 +1,4 @@
-package java.Ventanas;
+package psc11.tiendaOnline.Ventanas;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;

@@ -8,12 +8,6 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.JTable;
 
-import spq.client.TheClient;
-import spq.jdo.Product;
-import spq.jdo.User;
-import spq.serialization.ProductData;
-import spq.serialization.SaleData;
-
 import javax.swing.JButton;
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;

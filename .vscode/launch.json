@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-TOApp<PSCG11>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "psc11.tiendaOnline.TOApp",
+            "projectName": "PSCG11",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

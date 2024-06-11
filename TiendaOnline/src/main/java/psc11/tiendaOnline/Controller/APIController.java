@@ -1,16 +1,19 @@
+package psc11.tiendaOnline.Controller;
+
 
 
 import org.springframework.web.bind.annotation.RestController;
 
-import psc5.service.PlatoService;
-import service.PedidoService;
-import service.UsuarioService;
-import DataDomain.Plato;
-import DataDomain.Categoria;
-import DataDomain.Estado;
-import DataDomain.Pedido;
-import DataDomain.TipoUsuario;
-import DataDomain.Usuario;
+
+import psc11.tiendaOnline.DataDomain.Plato;
+import psc11.tiendaOnline.DataDomain.Categoria;
+import psc11.tiendaOnline.DataDomain.Estado;
+import psc11.tiendaOnline.DataDomain.Pedido;
+import psc11.tiendaOnline.DataDomain.TipoUsuario;
+import psc11.tiendaOnline.DataDomain.Usuario;
+import psc11.tiendaOnline.Service.PedidoService;
+import psc11.tiendaOnline.Service.PlatoService;
+import psc11.tiendaOnline.Service.UsuarioService;
 
 import java.util.ArrayList;
 import java.util.List;

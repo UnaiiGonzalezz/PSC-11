@@ -1,7 +1,8 @@
+package psc11.tiendaOnline.Dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import DataDomain.Plato;
+import psc11.tiendaOnline.DataDomain.Plato;
 
 @Repository
 public interface PlatoRepository extends JpaRepository<Plato, Integer>{

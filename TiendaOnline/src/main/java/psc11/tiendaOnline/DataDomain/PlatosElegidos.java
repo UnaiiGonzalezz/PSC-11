@@ -1,4 +1,4 @@
-
+package psc11.tiendaOnline.DataDomain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "platosElegidos")
-public class ArticulosComprados {
+public class PlatosElegidos {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected int id;

@@ -1,4 +1,4 @@
-
+package psc11.tiendaOnline.Service;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,15 +10,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import DataDomain.Plato;
-import DataDomain.Estado;
-import DataDomain.Pedido;
-import DataDomain.Usuario;
-import dao.PedidoRepository;
+import psc11.tiendaOnline.DataDomain.Plato;
+import psc11.tiendaOnline.Dao.PedidoRepository;
+import psc11.tiendaOnline.DataDomain.Estado;
+import psc11.tiendaOnline.DataDomain.Pedido;
+import psc11.tiendaOnline.DataDomain.Usuario;
+
 
 @Service
 public class PedidoService {
-    private final PedidoRepository pedidoRepository;
+    private final psc11.tiendaOnline.Dao.PedidoRepository pedidoRepository;
     private final PlatoService platoService;
     private final String connectionString;
 

@@ -1,4 +1,4 @@
-
+package psc11.tiendaOnline.DataDomain;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -22,7 +22,7 @@ public class Pedido {
     @Enumerated(EnumType.STRING)
     protected Estado estado;
 
-    public Pedido(Usuario usuario, List<Articulo> articulosComprados, Estado estado) {
+    public Pedido(Usuario usuario, List<Plato> articulosComprados, Estado estado) {
         this.usuario = usuario;
         this.estado = estado;
     }

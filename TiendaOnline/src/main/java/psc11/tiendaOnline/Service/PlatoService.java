@@ -1,4 +1,4 @@
-
+package psc11.tiendaOnline.Service;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -9,9 +9,9 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import DataDomain.Plato;
-import DataDomain.Categoria;
-import PlatoRepository;
+import psc11.tiendaOnline.DataDomain.Plato;
+import psc11.tiendaOnline.DataDomain.Categoria;
+import psc11.tiendaOnline.PlatoRepository;
 
 @Service
 public class PlatoService {

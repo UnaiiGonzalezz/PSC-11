@@ -9,14 +9,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
-public class VentanaTablaClientes extends JFrame {
+public class VentanaTablaCliente extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JButton btnAtras = new JButton("Atrás");
     private JPanel contentPane;
     private JTable tabla;
 
-    public VentanaTablaClientes() {
+    public VentanaTablaCliente() {
         // iniciar contexto de Spring
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
         UserService userService = context.getBean(UserService.class);
@@ -75,7 +75,7 @@ public class VentanaTablaClientes extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    VentanaTablaClientes ventana = new VentanaTablaClientes();
+                    VentanaTablaCliente ventana = new VentanaTablaCliente();
                     ventana.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();

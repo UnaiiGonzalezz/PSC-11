@@ -1,4 +1,4 @@
-
+package psc11.tiendaOnline.DataDomain;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -35,8 +35,8 @@ public class PlatosElegidosTest {
 
     @Test
     public void testGetArticulo(){
-        platosElegidos.setArticulo(new Articulo());
-        assertNotNull(platosElegidos.getArticulo());
+        platosElegidos.setPlato(new Plato());
+        assertNotNull(platosElegidos.getPlato());
     }
 
     @Test

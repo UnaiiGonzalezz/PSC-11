@@ -1,4 +1,4 @@
-
+package psc11.tiendaOnline.DataDomain;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -29,11 +29,11 @@ public class PlatoTest {
     @PerfTest(invocations = 1000, threads = 20)
     @Required(max = 120, average = 30)
     public void testConstructor() {
-        Categoria categoria = Categoria.Ropa;
+        Categoria categoria = Categoria.Entrante;
         String descripcion = "Descripción";
         String nombre = "Nombre";
-        double precio = 100;
-        String tamano = "S";
+        double precio = 5;
+        String tamano = "Normal";
         
         Plato nuevoPlato = new Plato(categoria, descripcion, nombre, precio, tamano);
         assertNotNull(nuevoPlato);
@@ -42,8 +42,8 @@ public class PlatoTest {
 
     @Test
     public void testGetCategoria(){
-        plato.setCategoria(Categoria.Ropa);
-        assertEquals(Categoria.Ropa, plato.getCategoria());
+        plato.setCategoria(Categoria.Entrante);
+        assertEquals(Categoria.Entrante, plato.getCategoria());
     }
 
     @Test
@@ -66,8 +66,8 @@ public class PlatoTest {
 
     @Test
     public void testGetTamano(){
-        plato.setTamano("S");
-        assertEquals("S", plato.getTamano());
+        plato.setTamano("Normal");
+        assertEquals("Normal", plato.getTamano());
     }
 
     @Test

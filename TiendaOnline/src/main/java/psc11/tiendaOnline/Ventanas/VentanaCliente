@@ -1,4 +1,4 @@
-package java.Ventanas;
+package psc11.tiendaOnline.Ventanas;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

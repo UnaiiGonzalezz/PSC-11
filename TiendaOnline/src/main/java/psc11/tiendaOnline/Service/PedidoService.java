@@ -125,4 +125,11 @@ public class PedidoService {
     
         return null;
     }
+//Método para listar compras de un usuario
+    public List<Venta> listarComprasPorUsuario(String usuarioId) {
+        return ventas.stream()
+                .filter(venta -> venta.getUsuario().getId().equals(usuarioId))
+                .collect(Collectors.toList());
+    }
+
 }

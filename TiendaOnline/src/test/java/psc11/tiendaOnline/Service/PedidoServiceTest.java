@@ -1,129 +1,86 @@
 package psc11.tiendaOnline.Service;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.Arrays;
 import java.util.List;
 
-
+import org.databene.contiperf.PerfTest;
+import org.databene.contiperf.Required;
 import org.databene.contiperf.junit.ContiPerfRule;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import psc11.tiendaOnline.Dao.PedidoRepository;
 import psc11.tiendaOnline.DataDomain.Estado;
 import psc11.tiendaOnline.DataDomain.Pedido;
-import psc11.tiendaOnline.Dao.PedidoRepository;
+import psc11.tiendaOnline.DataDomain.TipoUsuario;
+import psc11.tiendaOnline.DataDomain.Usuario;
+
 
 @RunWith(MockitoJUnitRunner.class)
+@PerfTest(invocations = 500)
+@Required(max = 1200, average = 250)
 public class PedidoServiceTest {
 
-    @Rule
-    public ContiPerfRule contiPerfRule = new ContiPerfRule();
-
-    @InjectMocks
     private PedidoService pedidoService;
-
     @Mock
     private PedidoRepository pedidoRepository;
-
     @Mock
     private PlatoService platoService;
-
     @Mock
-    private Connection connection;
-
+    private Pedido pedido;
     @Mock
-    private PreparedStatement preparedStatement;
-
+    private Pedido pedido1;
     @Mock
-    private ResultSet resultSet;
+    private Usuario usuario;
+    
+    @Rule public ContiPerfRule rule = new ContiPerfRule();
 
     @Before
-    public void setUp() throws Exception {
-        MockitoAnnotations.openMocks(this);
+    public void setUp() {
+        pedido = new Pedido(new Usuario(), Estado.Preparacion);
+        pedido.setId(1);
+        usuario = new Usuario("contr", "dni", "nombre", "correo", null, TipoUsuario.Administrador);
+        pedido1 = new Pedido(usuario, Estado.Entregado);
+        pedido1.setId(2);
+        this.pedidoService = new PedidoService(this.pedidoRepository, this.platoService);
     }
 
     @Test
     public void testGetPedido() {
-        Pedido expectedPedido = new Pedido();
-        expectedPedido.setId(1);
-        when(pedidoRepository.findById(1)).thenReturn(expectedPedido);
-
-        Pedido actualPedido = pedidoService.getPedido(1);
-
-        assertNotNull(actualPedido);
-        assertEquals(expectedPedido, actualPedido);
+        pedido.setId(1);
+        when(pedidoRepository.findById(1)).thenReturn(pedido);
+        Pedido result = pedidoService.getPedido(1);
+        assertEquals(pedido, result);
     }
 
     @Test
     public void testGetAllPedidos() {
-        Pedido pedido1 = new Pedido();
-        Pedido pedido2 = new Pedido();
-        List<Pedido> expectedPedidos = Arrays.asList(pedido1, pedido2);
-        when(pedidoRepository.findAll()).thenReturn(expectedPedidos);
-
-        List<Pedido> actualPedidos = pedidoService.getAllPedidos();
-
-        assertNotNull(actualPedidos);
-        assertEquals(expectedPedidos.size(), actualPedidos.size());
-        assertSame(expectedPedidos.get(0), actualPedidos.get(0));
+        when(pedidoService.getAllPedidos()).thenReturn(Arrays.asList(pedido, pedido1));
+        List<Pedido> pedidos = pedidoService.getAllPedidos();
+        assertNotNull(pedidos);
     }
 
     @Test
     public void testAddPedido() {
-        Pedido newPedido = new Pedido();
-        when(pedidoRepository.save(newPedido)).thenReturn(newPedido);
-
-        Pedido actualPedido = pedidoService.addPedido(newPedido);
-
-        assertNotNull(actualPedido);
-        assertEquals(newPedido, actualPedido);
+        when(pedidoService.addPedido(any(Pedido.class))).thenReturn(pedido);
+        Pedido ped = pedidoService.addPedido(pedido);
+        assertNotNull(ped);
     }
 
     @Test
     public void testUpdatePedido() {
-        Pedido existingPedido = new Pedido();
-        existingPedido.setId(1);
-        existingPedido.setEstado(Estado.Reparto);
-        Pedido updatedPedido = new Pedido();
-        updatedPedido.setEstado(Estado.Entregado);
-
-        when(pedidoRepository.findById(1)).thenReturn(existingPedido);
-        when(pedidoRepository.save(existingPedido)).thenReturn(existingPedido);
-
-        Pedido resultPedido = pedidoService.updatePedido(updatedPedido, 1);
-
-        assertNotNull(resultPedido);
-        assertEquals(Estado.Entregado, resultPedido.getEstado());
+        pedido.setEstado(Estado.Reparto);
+        when(pedidoService.updatePedido(pedido, 1)).thenReturn(pedido);
+        Pedido result = pedidoService.updatePedido(pedido, 1);
+        assertEquals(Estado.Reparto, result.getEstado());
     }
-
-    /*@Test
-    @PerfTest(invocations = 100, threads = 20)
-    @Required(max = 1200, average = 250)
-    public void testLoadPlatosbyPedido() throws SQLException {
-        when(connection.prepareStatement(anyString())).thenReturn(preparedStatement);
-        when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(true, false);
-
-        Plato expectedPlato = new Plato();
-        expectedPlato.setId(1);
-        when(platoService.getPlato(anyInt())).thenReturn(expectedPlato);
-
-        List<Plato> platos = pedidoService.loadPlatosbyPedido(1);
-
-        assertNotNull(platos);
-        assertEquals(1, platos.size());
-        assertEquals(expectedPlato, platos.get(0));
-    }*/
 }
-

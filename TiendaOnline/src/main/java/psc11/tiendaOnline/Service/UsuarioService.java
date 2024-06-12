@@ -24,7 +24,7 @@ public class UsuarioService {
     public UsuarioService(UsuarioRepository usuarioRepository){
         this.usuarioRepository = usuarioRepository;
 
-        connectionString = "jdbc:sqlite:DeustoImperioModa.db";
+        connectionString = "jdbc:sqlite:TiendaOnline.db";
         loadDatos();
     }
 

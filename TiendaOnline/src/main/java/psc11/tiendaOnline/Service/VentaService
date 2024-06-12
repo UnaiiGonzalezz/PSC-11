@@ -1,4 +1,4 @@
-package psc11.tienaonline.service;
+package psc11.tiendaOnline.Service;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,12 +11,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import psc11.tienaonline.DataDomain.Plato;
-import psc11.tienaonline.DataDomain.PlatoRepository;
-import psc11.tienaonline.DataDomain.Usuario;
-import psc11.tienaonline.DataDomain.UsuarioRepository;
-import psc11.tienaonline.DataDomain.Venta;
-import psc11.tienaonline.DataDomain.VentaRepository;
+import psc11.tiendaOnline.DataDomain.Plato;
+import psc11.tiendaOnline.DataDomain.PlatoRepository;
+import psc11.tiendaOnline.DataDomain.Usuario;
+import psc11.tiendaOnline.DataDomain.UsuarioRepository;
+import psc11.tiendaOnline.DataDomain.Venta;
+import psc11.tiendaOnline.DataDomain.VentaRepository;
 
 @Service
 public class VentaService {

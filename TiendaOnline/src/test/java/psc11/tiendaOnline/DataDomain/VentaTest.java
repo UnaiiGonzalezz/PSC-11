@@ -93,8 +93,8 @@ public class VentaTest {
 
     @Test
     public void testSetEstado() {
-        venta.setEstado(Estado.Enviado);
-        assertEquals(Estado.Enviado, venta.getEstado());
+        venta.setEstado(Estado.Entregado);
+        assertEquals(Estado.Entregado, venta.getEstado());
     }
 
     @Test

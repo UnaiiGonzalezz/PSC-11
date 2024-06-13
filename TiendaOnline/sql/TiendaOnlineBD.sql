@@ -25,7 +25,7 @@ CREATE TABLE Usuarios (
 
 CREATE TABLE Pedidos (     
     id INT PRIMARY KEY AUTO_INCREMENT, 
-    plato VARCHAR(225),       
+    plato INT,       
     FOREIGN KEY (plato) REFERENCES Platos(id)   
 );
 
@@ -37,4 +37,16 @@ CREATE TABLE Platos (
     precio DECIMAL,
     tam VARCHAR(255)  
 );
+
+INSERT INTO Usuarios (dni, contrasena, nombre, correo, tipo, pedido) VALUES 
+('aaa111', 'a', 'iker', 'iker.cortajarena@opendeusto.es', 'cliente', 1),
+('aaa222', 'b', 'unai', 'unai.gonzalez@opendeusto.es', 'administrador', 1);
+
+INSERT INTO Pedidos (id, plato) VALUES 
+(1, 1),
+(2, 2);
+
+INSERT INTO Usuarios (id, nombre, descr, categoria, precio, tam) VALUES 
+(1, 'Arroz a la cubana', 'arroz con tomate y huevo', 'primero', 5.5, 'grande'),
+(2, 'Mermelada', 'mermelada en tostada', 'postre', 3.3, 'pequeño');
 

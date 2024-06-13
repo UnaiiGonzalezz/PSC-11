@@ -55,4 +55,3 @@ INSERT INTO Pedidos (plato) VALUES
 INSERT INTO Usuarios (dni, contrasena, nombre, correo, tipo, pedido) VALUES 
 ('aaa111', 'a', 'iker', 'iker.cortajarena@opendeusto.es', 'cliente', 1),
 ('aaa222', 'b', 'unai', 'unai.gonzalez@opendeusto.es', 'administrador', 2);
-

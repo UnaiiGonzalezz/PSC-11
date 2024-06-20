@@ -17,18 +17,18 @@ USE TiendaOnlineDB;
 
 -- Crear tablas en el orden correcto
 CREATE TABLE Platos (     
-    id INT PRIMARY KEY AUTO_INCREMENT,        
+    id_Plato INT PRIMARY KEY AUTO_INCREMENT,        
     nombre VARCHAR(255),  
-    descr VARCHAR(500), 
-    categoria VARCHAR(255), 
+    descripcion VARCHAR(500),
     precio DECIMAL(10,2),
-    tam VARCHAR(255)  
+    tamano VARCHAR(255),
+    categoria VARCHAR(255) 
 );
 
 CREATE TABLE Pedidos (     
-    id INT PRIMARY KEY AUTO_INCREMENT, 
+    ID_ped INT PRIMARY KEY AUTO_INCREMENT, 
     plato INT,       
-    FOREIGN KEY (plato) REFERENCES Platos(id)   
+    FOREIGN KEY (plato) REFERENCES Platos(id_Plato)   
 );
 
 CREATE TABLE Usuarios (     
@@ -36,15 +36,15 @@ CREATE TABLE Usuarios (
     contrasena VARCHAR(255),     
     nombre VARCHAR(255), 
     correo VARCHAR(255),
-    tipo VARCHAR(255),
     pedido INT,
-    FOREIGN KEY (pedido) REFERENCES Pedidos(id) 
+    FOREIGN KEY (pedido) REFERENCES Pedidos(id),
+    tipo VARCHAR(255)
 );
 
 -- Insertar datos en Platos
-INSERT INTO Platos (nombre, descr, categoria, precio, tam) VALUES 
-('Arroz a la cubana', 'arroz con tomate y huevo', 'primero', 5.50, 'grande'),
-('Mermelada', 'mermelada en tostada', 'postre', 3.30, 'pequeño');
+INSERT INTO Platos (nombre, descripcion, precio, tamano, categoria) VALUES 
+('Arroz a la cubana', 'arroz con tomate y huevo', 5.50, 'grande', 'primero'),
+('Mermelada', 'mermelada en tostada', 3.30, 'pequeño', 'postre');
 
 -- Insertar datos en Pedidos
 INSERT INTO Pedidos (plato) VALUES 
@@ -52,6 +52,6 @@ INSERT INTO Pedidos (plato) VALUES
 (2);
 
 -- Insertar datos en Usuarios
-INSERT INTO Usuarios (dni, contrasena, nombre, correo, tipo, pedido) VALUES 
-('aaa111', 'a', 'iker', 'iker.cortajarena@opendeusto.es', 'cliente', 1),
-('aaa222', 'b', 'unai', 'unai.gonzalez@opendeusto.es', 'administrador', 2);
+INSERT INTO Usuarios (dni, contrasena, nombre, correo, pedido, tipo) VALUES 
+('aaa111', 'a', 'iker', 'iker.cortajarena@opendeusto.es', 1, 'cliente'),
+('aaa222', 'b', 'unai', 'unai.gonzalez@opendeusto.es', 2, 'administrador');

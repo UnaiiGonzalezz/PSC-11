@@ -1,0 +1,188 @@
+package psc11.TiendaOnlineCliente.GUI;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+import javax.annotation.PostConstruct;
+import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Component
+public class VentanaCliente extends JFrame {
+
+    private JFrame ventanaUsuario;
+    private JTable tablaProductos;
+    private final Usuario usuario;
+    private final RestTemplate restTemplate;
+
+    @Autowired
+    public VentanaCliente(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+        this.usuario = null; // Asigna el usuario según sea necesario
+        inicializar(usuario);
+    }
+
+    @PostConstruct
+    public void init() {
+        setVisible(true);
+    }
+
+    private void inicializar(Usuario u) {
+        ventanaUsuario = new JFrame();
+        ventanaUsuario.setBounds(100, 100, 670, 399);
+        ventanaUsuario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel panelCentral = new JPanel();
+        panelCentral.setBackground(new Color(255, 235, 205));
+        ventanaUsuario.getContentPane().add(panelCentral, BorderLayout.CENTER);
+
+        tablaProductos = new JTable();
+        tablaProductos.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Nombre", "Precio", "Disponible" }));
+        tablaProductos.setForeground(new Color(192, 192, 192));
+        panelCentral.add(tablaProductos);
+        DefaultTableModel def = new DefaultTableModel();
+        def.addColumn(u);
+
+        JPanel panelSur = new JPanel();
+        panelSur.setBackground(new Color(255, 255, 240));
+        ventanaUsuario.getContentPane().add(panelSur, BorderLayout.SOUTH);
+
+        JButton btnCerrarSesion = new JButton("Cerrar Sesión");
+        btnCerrarSesion.setBackground(Color.RED);
+        btnCerrarSesion.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        btnCerrarSesion.setForeground(Color.BLACK);
+        JButton btnCambiarContrasenya = new JButton("Cambiar Contraseña");
+        btnCambiarContrasenya.setBackground(Color.ORANGE);
+        btnCambiarContrasenya.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        btnCambiarContrasenya.setForeground(Color.BLACK);
+
+        JButton btnVerVentas = new JButton("Ver Compras");
+        btnVerVentas.setBackground(Color.ORANGE);
+        btnVerVentas.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        btnVerVentas.setForeground(Color.BLACK);
+
+        GroupLayout gl_panelSur = new GroupLayout(panelSur);
+        gl_panelSur.setHorizontalGroup(
+            gl_panelSur.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                .addGroup(gl_panelSur.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(btnCerrarSesion)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
+                    .addComponent(btnVerVentas)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(btnCambiarContrasenya)
+                    .addGap(24))
+        );
+        gl_panelSur.setVerticalGroup(
+            gl_panelSur.createParallelGroup(GroupLayout.Alignment.LEADING)
+                .addGroup(gl_panelSur.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(gl_panelSur.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnCambiarContrasenya, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCerrarSesion)
+                        .addComponent(btnVerVentas))
+                    .addContainerGap(22, Short.MAX_VALUE))
+        );
+        panelSur.setLayout(gl_panelSur);
+
+        JPanel panelNorte = new JPanel();
+        panelNorte.setBackground(new Color(255, 235, 205));
+        ventanaUsuario.getContentPane().add(panelNorte, BorderLayout.NORTH);
+
+        JLabel lblTitulo = new JLabel("Bienvenido ");
+        lblTitulo.setFont(new Font("Kunstler Script", Font.PLAIN, 24));
+        GroupLayout gl_panelNorte = new GroupLayout(panelNorte);
+        gl_panelNorte
+                .setHorizontalGroup(gl_panelNorte.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(GroupLayout.Alignment.TRAILING,
+                        gl_panelNorte.createSequentialGroup().addContainerGap(255, Short.MAX_VALUE)
+                                .addComponent(lblTitulo, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
+                                .addGap(233)));
+        gl_panelNorte.setVerticalGroup(gl_panelNorte.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(GroupLayout.Alignment.TRAILING,
+                gl_panelNorte.createSequentialGroup().addContainerGap(14, Short.MAX_VALUE).addComponent(lblTitulo)
+                        .addContainerGap()));
+        panelNorte.setLayout(gl_panelNorte);
+
+        btnCambiarContrasenya.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nuevaContrasena = JOptionPane.showInputDialog("Introduce la nueva contraseña: ");
+                Usuario nuevo = new Usuario(u.getName(), nuevaContrasena, u.getPurse(), 0);
+
+                restTemplate.delete("http://localhost:8080/usuario/eliminar/" + u.getName());
+                restTemplate.postForObject("http://localhost:8080/usuario/registrar", nuevo, Usuario.class);
+                new LoginWindow();
+                dispose();
+            }
+        });
+
+        btnVerVentas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<SaleData> ventas = restTemplate.getForObject("http://localhost:8080/ventas", List.class);
+                if (ventas != null) {
+                    String mensaje = ventas.stream()
+                            .filter(venta -> venta.getBuyer().equals(u.getName()))
+                            .map(venta -> "Producto: " + venta.getNameProduct() + "\nPrecio: " + venta.getPriceProduct() + "\n--------------------------------------\n")
+                            .collect(Collectors.joining());
+                    if (mensaje.isEmpty()) {
+                        mensaje = "Este usuario no tiene ventas";
+                    }
+                    JOptionPane.showMessageDialog(null, mensaje, "Ventas", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al recuperar las ventas", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        List<ProductData> productos = restTemplate.getForObject("http://localhost:8080/productos/disponibles", List.class);
+        for (ProductData prod : productos) {
+            JPanel panel = new JPanel();
+            panel.setLayout(new GridLayout(7, 0, 0, 0));
+
+            JLabel nombre = new JLabel(prod.getName());
+            JLabel etiquetaPrecio = new JLabel(String.valueOf(prod.getPrice()));
+            JButton botonComprar = new JButton("¡COMPRAR!");
+
+            botonComprar.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    boolean compraExitosa = restTemplate.postForObject("http://localhost:8080/comprar",
+                            new CompraRequest(u.getName(), prod.getName(), prod.getPrice()), Boolean.class);
+                    if (compraExitosa) {
+                        botonComprar.setEnabled(false);
+                        restTemplate.postForObject("http://localhost:8080/ventas/agregar", new Venta(u.getName(), prod), Venta.class);
+                    }
+                }
+            });
+
+            panel.add(nombre);
+            panel.add(etiquetaPrecio);
+            panel.add(botonComprar);
+            panel.setBorder(BorderFactory.createLineBorder(Color.black));
+            panelCentral.add(panel);
+            panelCentral.updateUI();
+        }
+
+        btnCerrarSesion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new LoginWindow();
+                dispose();
+            }
+        });
+    }
+
+    @Override
+    public void setVisible(boolean b) {
+        ventanaUsuario.setVisible(b);
+    }
+}
+
+

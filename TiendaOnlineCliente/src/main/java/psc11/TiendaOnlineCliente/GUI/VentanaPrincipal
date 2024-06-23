@@ -1,0 +1,244 @@
+package psc11.TiendaOnlineCliente.GUI;
+
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import javax.swing.JTable;
+
+import javax.swing.JButton;
+import javax.swing.BorderFactory;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.table.DefaultTableModel;
+
+public class VentanaPrincipalUsuario extends JFrame {
+
+    private JFrame ventanaUsuario;
+    private JTable tablaProductos;
+
+    /**
+     * Crea la aplicación.
+     */
+    public VentanaPrincipalUsuario(User usuario) {
+        inicializar(usuario);
+    }
+
+    /**
+     * Inicializa los contenidos del frame.
+     */
+    private void inicializar(User usuario) {
+        ventanaUsuario = new JFrame();
+        ventanaUsuario.setBounds(100, 100, 670, 399);
+        ventanaUsuario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel panelCentro = new JPanel();
+        panelCentro.setBackground(new Color(255, 235, 205));
+        ventanaUsuario.getContentPane().add(panelCentro, BorderLayout.CENTER);
+
+        tablaProductos = new JTable();
+        tablaProductos.setModel(new DefaultTableModel(new Object[][] {}, new String[] { "Nombre", "Precio", "Disponible" }));
+        tablaProductos.setForeground(new Color(192, 192, 192));
+        panelCentro.add(tablaProductos);
+        DefaultTableModel modeloTabla = new DefaultTableModel();
+        modeloTabla.addColumn(usuario);
+
+        JPanel panelSur = new JPanel();
+        panelSur.setBackground(new Color(255, 255, 240));
+        ventanaUsuario.getContentPane().add(panelSur, BorderLayout.SOUTH);
+
+        JButton btnCerrarSesion = new JButton("Cerrar Sesión");
+        btnCerrarSesion.setBackground(Color.RED);
+        btnCerrarSesion.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        btnCerrarSesion.setForeground(Color.BLACK);
+
+        JButton btnCambiarContraseña = new JButton("Cambiar Contraseña");
+        btnCambiarContraseña.setBackground(Color.ORANGE);
+        btnCambiarContraseña.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        btnCambiarContraseña.setForeground(Color.BLACK);
+
+        JButton btnActualizarSaldo = new JButton("Actualizar Saldo");
+        btnActualizarSaldo.setBackground(Color.GREEN);
+        btnActualizarSaldo.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        btnActualizarSaldo.setForeground(Color.BLACK);
+
+        JButton btnVerVentas = new JButton("Ver Ventas");
+        btnVerVentas.setBackground(Color.ORANGE);
+        btnVerVentas.setFont(new Font("Tahoma", Font.PLAIN, 10));
+        btnVerVentas.setForeground(Color.BLACK);
+
+        GroupLayout gl_panelSur = new GroupLayout(panelSur);
+        gl_panelSur.setHorizontalGroup(
+            gl_panelSur.createParallelGroup(Alignment.TRAILING)
+                .addGroup(gl_panelSur.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(btnCerrarSesion)
+                    .addComponent(btnActualizarSaldo)
+                    .addPreferredGap(ComponentPlacement.RELATED, 242, Short.MAX_VALUE)
+                    .addComponent(btnVerVentas)
+                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addComponent(btnCambiarContraseña)
+                    .addGap(24))
+        );
+        gl_panelSur.setVerticalGroup(
+            gl_panelSur.createParallelGroup(Alignment.LEADING)
+                .addGroup(gl_panelSur.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(gl_panelSur.createParallelGroup(Alignment.BASELINE)
+                        .addComponent(btnCambiarContraseña, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCerrarSesion)
+                        .addComponent(btnActualizarSaldo)
+                        .addComponent(btnVerVentas))
+                    .addContainerGap(22, Short.MAX_VALUE))
+        );
+        panelSur.setLayout(gl_panelSur);
+
+        JPanel panelNorte = new JPanel();
+        panelNorte.setBackground(new Color(255, 235, 205));
+        ventanaUsuario.getContentPane().add(panelNorte, BorderLayout.NORTH);
+
+        JLabel lblTitulo = new JLabel("Bienvenido ");
+        lblTitulo.setFont(new Font("Kunstler Script", Font.PLAIN, 24));
+        GroupLayout gl_panelNorte = new GroupLayout(panelNorte);
+        gl_panelNorte
+                .setHorizontalGroup(gl_panelNorte.createParallelGroup(Alignment.LEADING)
+                        .addGroup(Alignment.TRAILING, gl_panelNorte.createSequentialGroup()
+                                .addContainerGap(255, Short.MAX_VALUE)
+                                .addComponent(lblTitulo, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
+                                .addGap(233)));
+        gl_panelNorte.setVerticalGroup(gl_panelNorte.createParallelGroup(Alignment.LEADING)
+                .addGroup(Alignment.TRAILING, gl_panelNorte.createSequentialGroup()
+                        .addContainerGap(14, Short.MAX_VALUE)
+                        .addComponent(lblTitulo)
+                        .addContainerGap()));
+        panelNorte.setLayout(gl_panelNorte);
+
+        /**
+         * Botón para cambiar la contraseña del usuario.
+         */
+        btnCambiarContraseña.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nuevaContraseña = JOptionPane.showInputDialog("Introduce la nueva contraseña: ");
+                User nuevoUsuario = new User(usuario.getName(), nuevaContraseña, usuario.getPurse(), 0);
+                String hostname = "localhost";
+                String puerto = "8080";
+
+                TheClient cliente = new TheClient(hostname, puerto);
+                cliente.deleteUser(usuario);
+                cliente.registerUser(nuevoUsuario.getName(), nuevoUsuario.getPassword(), nuevoUsuario.getPurse(), 0);
+                new VentanaLogin();
+                dispose();
+            }
+        });
+
+        btnActualizarSaldo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String monto = JOptionPane.showInputDialog("Introduce el monto a agregar: ");
+                String hostname = "localhost";
+                String puerto = "8080";
+
+                TheClient cliente = new TheClient(hostname, puerto);
+                cliente.updatePurse(usuario, Double.parseDouble(monto), usuario.getPurse());
+                dispose();
+            }
+        });
+
+        btnVerVentas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String hostname = "localhost";
+                String puerto = "8080";
+
+                TheClient cliente = new TheClient(hostname, puerto);
+                List<SaleData> ventas = cliente.getSales();
+                if (ventas != null) {
+                    StringBuilder mensaje = new StringBuilder();
+                    mensaje.append("Productos comprados por el usuario: ").append(usuario.getName()).append("\n");
+                    int contador = 0;
+                    for (SaleData venta : ventas) {
+                        if (venta.getBuyer().equals(usuario.getName())) {
+                            mensaje.append("Producto: ").append(venta.getNameProduct()).append("\n");
+                            mensaje.append("Precio: ").append(venta.getPriceProduct()).append("\n");
+                            mensaje.append("--------------------------------------\n");
+                            contador++;
+                        }
+                    }
+                    if (contador == 0) {
+                        mensaje.append("Este usuario no tiene ventas");
+                    }
+                    JOptionPane.showMessageDialog(null, mensaje.toString(), "Ventas", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al recuperar las ventas", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+
+        String hostname = "localhost";
+        String puerto = "8080";
+
+        TheClient cliente = new TheClient(hostname, puerto);
+        List<ProductData> productos = cliente.getAvailableProducts();
+        for (ProductData producto : productos) {
+
+            JPanel panel = new JPanel();
+            panel.setLayout(new GridLayout(7, 0, 0, 0));
+
+            panel.add(new JLabel(producto.getName()));
+            JLabel nombreProducto = new JLabel(producto.getName());
+            double precio = producto.getPrice();
+            String precioTexto = Double.toString(precio);
+
+            panel.add(new JLabel(precioTexto));
+            JLabel precioEtiqueta = new JLabel(precioTexto);
+
+            JLabel precioLabel = new JLabel(precioTexto);
+            JButton btnComprar = new JButton("¡COMPRAR!");
+            /**
+             * Botón que aparecerá una vez por cada producto disponible para comprar.
+             * Al hacer clic, si es posible para el usuario, el producto se comprará y ya no estará disponible.
+             */
+            btnComprar.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    boolean comprado = false;
+                    TheClient cliente = new TheClient(hostname, puerto);
+                    comprado = cliente.buyProduct(usuario, Double.parseDouble(precioEtiqueta.getText()), nombreProducto.getText());
+                    if (comprado) {
+                        btnComprar.setEnabled(false);
+                        Product productoComprado = new Product(producto.getName(), producto.getPrice(), producto.isAvailable());
+                        cliente.addSale(usuario.getName(), productoComprado);
+                    }
+                }
+            });
+
+            panel.add(btnComprar);
+            panel.setBorder(BorderFactory.createLineBorder(Color.black));
+            panelCentro.add(panel);
+            panelCentro.updateUI();
+        }
+
+        btnCerrarSesion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new VentanaLogin();
+                dispose();
+            }
+        });
+    }
+
+    @Override
+    public void setVisible(boolean visible) {
+        ventanaUsuario.setVisible(visible);
+    }
+}

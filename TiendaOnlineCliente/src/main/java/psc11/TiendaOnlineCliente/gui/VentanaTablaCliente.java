@@ -1,4 +1,4 @@
-package psc11.TiendaOnlineCliente.GUI;
+package psc11.TiendaOnlineCliente.gui;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

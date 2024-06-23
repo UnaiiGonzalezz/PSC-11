@@ -1,10 +1,12 @@
-package psc11.TiendaOnlineCliente.GUI;
+package psc11.TiendaOnlineCliente.gui;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
+import psc11.TiendaOnlineCliente.post.Usuario;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;

@@ -30,7 +30,7 @@ public class VentanaProductos extends JFrame {
     private JTable tablaProductos;
     private List<Plato> todosLosPlatos = new ArrayList<>();
     private JButton botonAgregar, botonEliminar, botonEditar, backButton, añadirCarrito, misPedidos;
-    private JLabel labelCalzado, labelRopaDeportiva, labelCalzadoDeportivo, labelRopa, labelAccesorios, labelRopaInterior, verTodo, labelFiltroDineroMax, labelFiltroTalla, labelFiltroDineroMin, labelFiltroTallaCalzado;
+    private JLabel labelPostre, labelPrimero, labelSegundo, labelBatido, labelEntrante, verTodo, labelFiltroDineroMax, labelFiltroTamano, labelFiltroDineroMin;
     private JButton carrito;
     private List<Plato> productosCarrito = new ArrayList<>();
 

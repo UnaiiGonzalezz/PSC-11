@@ -136,16 +136,16 @@ public class VentanaProductos extends JFrame {
         });
 
         // Crear JComboBox para filtrar por talla
-        String[] tamano = { "-", "Normal", "Infantil", "XL" };
-        JComboBox<String> comboBoxTamanos = new JComboBox<>(tamano);
+        String[] categoria = { "-", "Primero", "Segundo", "Postre", "Batido", "Entrante" };
+        JComboBox<String> comboBoxCategoria = new JComboBox<>(categoria);
 
-        comboBoxTamanos.addActionListener(new ActionListener() {
+        comboBoxCategoria.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Paso 2: Obtener el valor seleccionado del JComboBox
-                String tamanoSeleccionada = (String) comboBoxTamanos.getSelectedItem();
+                String categoriaSelecionada = (String) comboBoxCategoria.getSelectedItem();
         
-                filtrarProductosPortamano(tamanoSeleccionada);
+                filtrarProductosPorCategoria(categoriaSelecionada);
             }
         });
 
@@ -177,7 +177,7 @@ public class VentanaProductos extends JFrame {
         panelFiltros2.add(labelPrecioMin);
         
         panelFiltros3.add(labelFiltroTamano);
-        panelFiltros3.add(comboBoxTamanos);
+        panelFiltros3.add(comboBoxCategoria);
         // panelFiltros3.add(labelFiltroTallaCalzado);
         // panelFiltros3.add(comboBoxTallasCalzado);
 

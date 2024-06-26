@@ -57,7 +57,7 @@ public class UsuarioServiceTest {
     @Test
     public void testGetUsuario() {
         Usuario usuario1 = new Usuario();
-        when(usuarioRepository.findByid(any())).thenReturn(usuario1);
+        when(usuarioRepository.findByDni(any())).thenReturn(usuario1);
         Usuario usuario2 = usuarioService.getUsuario("12345678A");
         assertEquals(usuario1, usuario2);
     }
@@ -73,7 +73,7 @@ public class UsuarioServiceTest {
 
     @Test
     public void testUpdateUsuario() {
-        when(usuarioRepository.findByid("dni")).thenReturn(usuario);
+        when(usuarioRepository.findByDni("dni")).thenReturn(usuario);
         Usuario UsuarioViejo = new Usuario();
         UsuarioViejo.setDni("dni");
         UsuarioViejo.setNombre("Usuario1");
@@ -87,16 +87,16 @@ public class UsuarioServiceTest {
         Usuario usuario2 = new Usuario();
         when(usuarioService.addUsuario(usuario2, "dni")).thenReturn(usuario2);
         usuarioService.addUsuario(usuario2, "dni");
-        when(usuarioRepository.findByid("")).thenReturn(usuario2);
+        when(usuarioRepository.findByDni("")).thenReturn(usuario2);
         usuarioService.addUsuario(usuario2, "dni");
         assertNotNull(usuario2);
     }
 
     @Test
     public void testDeleteUsuario() {
-        when(usuarioRepository.findByid("dni")).thenReturn(usuario);
+        when(usuarioRepository.findByDni("dni")).thenReturn(usuario);
         usuarioService.deleteUsuario("dni");
-        when(usuarioRepository.findByid("notDNI")).thenReturn(null);
+        when(usuarioRepository.findByDni("notDNI")).thenReturn(null);
         usuarioService.deleteUsuario("notDNI");
         assertNull(usuarioService.getUsuario("notDNI"));
     }

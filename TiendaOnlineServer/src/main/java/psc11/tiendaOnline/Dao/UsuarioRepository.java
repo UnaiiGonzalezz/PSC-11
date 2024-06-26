@@ -7,6 +7,6 @@ import psc11.tiendaOnline.DataDomain.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
-    Usuario findByid(String id);
+    Usuario findByDni(String dni);
     Usuario findByTipoUsuario(TipoUsuario tipoUsuario);
 }

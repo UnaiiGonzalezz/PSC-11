@@ -52,8 +52,8 @@ public class UsuarioService {
      *  @return Devuelve el usuario si coincide con el dni
      */
 
-    public Usuario getUsuario(String id){
-        Usuario result = usuarioRepository.findByid(id);
+    public Usuario getUsuario(String dni){
+        Usuario result = usuarioRepository.findByDni(dni);
         
         return result;
     }
@@ -87,8 +87,8 @@ public class UsuarioService {
      *  @return El usuario actualizado
      */
 
-    public Usuario updateUsuario(Usuario usuario, String id){
-        Usuario updatedUsuario = usuarioRepository.findByid(id);
+    public Usuario updateUsuario(Usuario usuario, String dni){
+        Usuario updatedUsuario = usuarioRepository.findByDni(dni);
 
         if (!(updatedUsuario == null)) {
 
@@ -111,13 +111,13 @@ public class UsuarioService {
      */
 
     public Usuario addUsuario(Usuario usuario, String dni){
-        Usuario result = usuarioRepository.findByid(usuario.getDni());
+        Usuario result = usuarioRepository.findByDni(usuario.getDni());
 
         if ((result == null)) {
 
             usuarioRepository.save(usuario);
 
-            if (!(usuarioRepository.findByid(dni)== null)) {
+            if (!(usuarioRepository.findByDni(dni)== null)) {
                 return result;
             }
         }
@@ -129,7 +129,7 @@ public class UsuarioService {
      */
 
     public void deleteUsuario(String dni){
-        Usuario result = usuarioRepository.findByid(dni);
+        Usuario result = usuarioRepository.findByDni(dni);
 
         if (!(result == null)) {
             usuarioRepository.delete(result);

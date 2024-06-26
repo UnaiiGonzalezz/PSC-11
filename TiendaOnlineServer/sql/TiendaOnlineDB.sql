@@ -16,7 +16,7 @@ GRANT ALL ON TiendaOnlineDB.* TO 'opled'@'localhost';
 USE TiendaOnlineDB;
 
 -- Crear tablas en el orden correcto
-CREATE TABLE Platos (     
+CREATE TABLE Plato (     
     id_Plato INT PRIMARY KEY AUTO_INCREMENT,        
     nombre VARCHAR(255),  
     descripcion VARCHAR(500),
@@ -25,33 +25,34 @@ CREATE TABLE Platos (
     categoria VARCHAR(255) 
 );
 
-CREATE TABLE Pedidos (     
+CREATE TABLE Pedido (     
     ID_ped INT PRIMARY KEY AUTO_INCREMENT, 
-    plato INT,       
-    FOREIGN KEY (plato) REFERENCES Platos(id_Plato)   
+    plato INT,  -- Cambiado de 'platos' a 'plato'    
+    FOREIGN KEY (plato) REFERENCES Plato(id_Plato),
+    estado VARCHAR(255)   
 );
 
-CREATE TABLE Usuarios (     
+CREATE TABLE Usuario (     
     dni CHAR(9) NOT NULL PRIMARY KEY,        
     contrasena VARCHAR(255),     
     nombre VARCHAR(255), 
     correo VARCHAR(255),
-    pedido INT,
-    FOREIGN KEY (pedido) REFERENCES Pedidos(id),
-    tipo VARCHAR(255)
+    pedido INT,  -- Cambiado de 'pedidos' a 'pedido'
+    FOREIGN KEY (pedido) REFERENCES Pedido(ID_ped),  -- Cambiado de 'id' a 'ID_ped'
+    tipo_usuario VARCHAR(255)
 );
 
 -- Insertar datos en Platos
-INSERT INTO Platos (nombre, descripcion, precio, tamano, categoria) VALUES 
+INSERT INTO Plato (nombre, descripcion, precio, tamano, categoria) VALUES 
 ('Arroz a la cubana', 'arroz con tomate y huevo', 5.50, 'grande', 'primero'),
 ('Mermelada', 'mermelada en tostada', 3.30, 'pequeño', 'postre');
 
 -- Insertar datos en Pedidos
-INSERT INTO Pedidos (plato) VALUES 
-(1),
-(2);
+INSERT INTO Pedido (plato, estado) VALUES  -- Añadido el campo 'estado' que es obligatorio según la definición de la tabla
+(1, 'pendiente'),
+(2, 'completado');
 
 -- Insertar datos en Usuarios
-INSERT INTO Usuarios (dni, contrasena, nombre, correo, pedido, tipo) VALUES 
+INSERT INTO Usuario (dni, contrasena, nombre, correo, pedido, tipo_usuario) VALUES  -- Cambiado 'pedidos' a 'pedido' y 'tipo' a 'tipo_usuario'
 ('aaa111', 'a', 'iker', 'iker.cortajarena@opendeusto.es', 1, 'cliente'),
 ('aaa222', 'b', 'unai', 'unai.gonzalez@opendeusto.es', 2, 'administrador');

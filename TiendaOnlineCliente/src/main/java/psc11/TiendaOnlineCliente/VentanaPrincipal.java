@@ -29,7 +29,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
-import psc11.TiendaOnlineCliente.gui.VentanaGestionCuentas;
+import psc11.TiendaOnlineCliente.gui.VentanaCuentas;
 import psc11.TiendaOnlineCliente.gui.VentanaPedido;
 import psc11.TiendaOnlineCliente.gui.VentanaAdministrador;
 import psc11.TiendaOnlineCliente.gui.VentanaProductos;
@@ -40,7 +40,7 @@ public class VentanaPrincipal extends JFrame{
     protected String dniUsuario;
     public static VentanaPrincipal vp;
     public static VentanaAdministrador va; 
-    public static VentanaGestionCuentas vgc; 
+    public static VentanaCuentas vgc; 
     public static VentanaProductos vprod;
     public static VentanaEnvio ve;
     public static VentanaPedido vpe;

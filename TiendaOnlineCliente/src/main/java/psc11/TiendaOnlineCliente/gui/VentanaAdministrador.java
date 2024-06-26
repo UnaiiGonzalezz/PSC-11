@@ -1,83 +1,109 @@
 package psc11.TiendaOnlineCliente.gui;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 import javax.swing.*;
-import java.awt.*;
+
+import psc11.TiendaOnlineCliente.VentanaPrincipal;
+
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class VentanaAdministrador extends JFrame {
+
+public class VentanaAdministrador extends JFrame{
+    protected JButton gestionarProductos;
+    protected JButton gestionarCuentas;
+    JButton gestionarEnvios;
+    
+    protected JButton backButton;
+    public static VentanaProductos vprod;
 
     public VentanaAdministrador() {
-        // Configuracion basica de la ventana
-        setTitle("Ventana del Administrador");
-        setSize(800, 600);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        setTitle("VENTANA ADMIN");
+        setSize(900, 450);
         setLocationRelativeTo(null);
-        
-        // Crear el panel principal
-        JPanel panelPrincipal = new JPanel();
-        panelPrincipal.setLayout(new BorderLayout());
-        getContentPane().add(panelPrincipal);
-        
-        // Crear un panel de control en la parte superior
-        JPanel panelControl = new JPanel();
-        panelControl.setLayout(new FlowLayout());
-        
-        // Botones de control
-        JButton btnAgregarProducto = new JButton("Agregar Producto");
-        JButton btnEliminarProducto = new JButton("Eliminar Producto");
-        
-        
-        // Agregar botones al panel de control
-        panelControl.add(btnAgregarProducto);
-        panelControl.add(btnEliminarProducto);
-      
-        
-        // Agregar el panel de control al panel principal
-        panelPrincipal.add(panelControl, BorderLayout.NORTH);
-        
-        // Area de texto para mostrar informacion
-        JTextArea areaTexto = new JTextArea();
-        areaTexto.setEditable(false);
-        JScrollPane scrollPane = new JScrollPane(areaTexto);
-        panelPrincipal.add(scrollPane, BorderLayout.CENTER);
-        
-        // Accion para el boton "Agregar Producto"
-        btnAgregarProducto.addActionListener(new ActionListener() {
+        Container cp = this.getContentPane();
+        cp.setLayout(new GridBagLayout());
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+
+        JPanel panelBotones = new JPanel(new GridLayout(1, 2));
+        cp.add(panelBotones, gbc);
+
+        gestionarProductos = new JButton("GESTIONAR PRODUCTOS");
+        gestionarCuentas = new JButton("GESTIONAR CUENTAS");
+        gestionarEnvios = new JButton("GESTIONAR ENVÍOS");
+        backButton = new JButton("Atrás");
+
+        Color buttonColor = new Color(140, 170, 255);
+        gestionarProductos.setBackground(buttonColor);
+        gestionarProductos.setBorder(new LineBorder(Color.BLACK));
+        gestionarCuentas.setBackground(buttonColor);
+        gestionarCuentas.setBorder(new LineBorder(Color.BLACK));
+        gestionarEnvios.setBackground(buttonColor);
+        gestionarEnvios.setBorder(new LineBorder(Color.BLACK));
+         
+
+        gestionarProductos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Aqui puedes agregar la logica para agregar un producto
-                String nuevoProducto = JOptionPane.showInputDialog("Ingrese el nombre del nuevo producto:");
-                if (nuevoProducto != null && !nuevoProducto.isEmpty()) {
-                    // Aqui se puede agregar el producto a la base de datos o lista de productos
-                    areaTexto.append("Producto agregado: " + nuevoProducto + "\n");
-                }
+                VentanaPrincipal.vprod = new VentanaProductos();
+                VentanaPrincipal.va.setVisible(false);
+                VentanaPrincipal.vprod.getProductos();
+                VentanaPrincipal.vprod.setVisible(true);
             }
         });
-        
-        // Accion para el boton "Eliminar Producto"
-        btnEliminarProducto.addActionListener(new ActionListener() {
+
+        gestionarCuentas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Aquí puedes agregar la lógica para eliminar un producto
-                String productoAEliminar = JOptionPane.showInputDialog("Ingrese el nombre del producto a eliminar:");
-                if (productoAEliminar != null && !productoAEliminar.isEmpty()) {
-                    // Aquí se puede eliminar el producto de la base de datos o lista de productos
-                    areaTexto.append("Producto eliminado: " + productoAEliminar + "\n");
-                }
+                VentanaPrincipal.vgc = new VentanaCuentas();
+                VentanaPrincipal.vgc.getUsuarios();
+                VentanaPrincipal.va.setVisible(false);
+                VentanaPrincipal.vgc.setVisible(true);
             }
         });
-        
-        
+
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                VentanaPrincipal.va.setVisible(false);
+                VentanaPrincipal.vp.setVisible(true);
+            }
+        });
+
+        gestionarEnvios.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VentanaPrincipal.ve = new VentanaEnvio();
+                //VentanaPrincipal.vgc.getPedidos();
+                VentanaPrincipal.va.setVisible(false);
+                VentanaPrincipal.ve.setVisible(true);
+            }
+        });
+
+        getContentPane().setLayout(new BorderLayout());
+
+        panelBotones.add(gestionarProductos);
+        panelBotones.add(gestionarCuentas);
+        panelBotones.add(gestionarEnvios);
+
+        add(panelBotones, BorderLayout.CENTER);
+        add(backButton, BorderLayout.SOUTH);
+
+        setVisible(true);
     }
 
-    public static void main(String[] args) {
-        // Crear y mostrar la ventana del administrador
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new VentanaAdministrador().setVisible(true);
-            }
-        });
-    }
+
 }

@@ -58,7 +58,6 @@ public class VentanaProductos extends JFrame {
         // Crear botones
         carrito = new JButton("");
         ImageIcon carritoIcon = new ImageIcon("resources/carrito2.jpg");
-//		strava.setIcon(new ImageIcon("resources/strava.png"));
 		Image carritoImage = carritoIcon.getImage().getScaledInstance(25, 25, Image.SCALE_SMOOTH);
 		carrito.setIcon(new ImageIcon(carritoImage));
 
@@ -69,18 +68,17 @@ public class VentanaProductos extends JFrame {
         añadirCarrito = new JButton("Añadir al carrito");
         misPedidos = new JButton("Mis Pedidos");
 
-        labelCalzado = new JLabel("Calzado");
-        labelRopaDeportiva = new JLabel("Ropa Deportiva");
-        labelCalzadoDeportivo = new JLabel("Calzado Deportivo");
-        labelRopa = new JLabel("Ropa");
-        labelAccesorios = new JLabel("Accesorios");
-        labelRopaInterior = new JLabel("Ropa Interior");
+        labelPostre = new JLabel("Postre");
+        labelPrimero = new JLabel("Primero");
+        labelSegundo = new JLabel("Segundo");
+        labelBatido = new JLabel("Batido");
+        labelEntrante = new JLabel("Entrante");
         verTodo = new JLabel("Ver Todo");
 
         labelFiltroDineroMax = new JLabel("Filtrar por precio máximo");
         labelFiltroDineroMin = new JLabel("Filtrar por precio minimo");
-        labelFiltroTalla = new JLabel("Filtrar por talla");
-        labelFiltroTallaCalzado = new JLabel("Filtrar por talla Calzado");
+        labelFiltroTamano = new JLabel("Filtrar por tamaño");
+        
 
         // Agregar botones al panel
         JPanel panelBotones = new JPanel();
@@ -138,30 +136,30 @@ public class VentanaProductos extends JFrame {
         });
 
         // Crear JComboBox para filtrar por talla
-        String[] tallas = { "-", "XS", "S", "M", "L", "XL" };
-        JComboBox<String> comboBoxTallas = new JComboBox<>(tallas);
+        String[] tamano = { "-", "Normal", "Infantil", "XL" };
+        JComboBox<String> comboBoxTamanos = new JComboBox<>(tamano);
 
-        comboBoxTallas.addActionListener(new ActionListener() {
+        comboBoxTamanos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Paso 2: Obtener el valor seleccionado del JComboBox
-                String tallaSeleccionada = (String) comboBoxTallas.getSelectedItem();
+                String tamanoSeleccionada = (String) comboBoxTamanos.getSelectedItem();
         
-                filtrarProductosPorTalla(tallaSeleccionada);
+                filtrarProductosPortamano(tamanoSeleccionada);
             }
         });
 
-        String[] tallasCalzado2 = { "-", "37", "38", "39", "40", "41", "42", "43", "44"};
-        JComboBox<String> comboBoxTallasCalzado = new JComboBox<>(tallasCalzado2);
+        // String[] tallasCalzado2 = { "-", "37", "38", "39", "40", "41", "42", "43", "44"};
+        // JComboBox<String> comboBoxTallasCalzado = new JComboBox<>(tallasCalzado2);
 
-        comboBoxTallasCalzado.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String tallaSeleccionada = (String) comboBoxTallasCalzado.getSelectedItem();
+        // comboBoxTallasCalzado.addActionListener(new ActionListener() {
+        //     @Override
+        //     public void actionPerformed(ActionEvent e) {
+        //         String tallaSeleccionada = (String) comboBoxTallasCalzado.getSelectedItem();
 
-                filtrarProductosPorTalla(tallaSeleccionada);
-            }
-        });
+        //         filtrarProductosPorTalla(tallaSeleccionada);
+        //     }
+        // });
 
 
         panelFiltros.setLayout(new BoxLayout(panelFiltros, BoxLayout.Y_AXIS));
@@ -178,21 +176,20 @@ public class VentanaProductos extends JFrame {
         panelFiltros2.add(sliderMin);
         panelFiltros2.add(labelPrecioMin);
         
-        panelFiltros3.add(labelFiltroTalla);
-        panelFiltros3.add(comboBoxTallas);
-        panelFiltros3.add(labelFiltroTallaCalzado);
-        panelFiltros3.add(comboBoxTallasCalzado);
+        panelFiltros3.add(labelFiltroTamano);
+        panelFiltros3.add(comboBoxTamanos);
+        // panelFiltros3.add(labelFiltroTallaCalzado);
+        // panelFiltros3.add(comboBoxTallasCalzado);
 
         panelNorte.add(panelCategoria);
         panelNorte.add(panelFiltros);
 
         panelBotones.add(backButton);
-        panelCategoria.add(labelCalzado);
-        panelCategoria.add(labelRopaDeportiva);
-        panelCategoria.add(labelCalzadoDeportivo);
-        panelCategoria.add(labelRopa);
-        panelCategoria.add(labelAccesorios);
-        panelCategoria.add(labelRopaInterior);
+        panelCategoria.add(labelPostre);
+        panelCategoria.add(labelPrimero);
+        panelCategoria.add(labelSegundo);
+        panelCategoria.add(labelBatido);
+        panelCategoria.add(labelEntrante);
         panelCategoria.add(verTodo);
         panelCategoria.add(carrito, BorderLayout.EAST);
 
@@ -214,90 +211,80 @@ public class VentanaProductos extends JFrame {
         verTodo.setOpaque(true);
 
 
-        labelCalzado.setFont(newFont);
-        labelCalzado.setForeground(newForegroundColor);
-        labelCalzado.setBackground(newBackgroundColor);
-        labelCalzado.setBorder(border);
-        labelCalzado.setHorizontalAlignment(SwingConstants.CENTER);
-        labelCalzado.setOpaque(true);
+        labelPostre.setFont(newFont);
+        labelPostre.setForeground(newForegroundColor);
+        labelPostre.setBackground(newBackgroundColor);
+        labelPostre.setBorder(border);
+        labelPostre.setHorizontalAlignment(SwingConstants.CENTER);
+        labelPostre.setOpaque(true);
 
-        labelRopaDeportiva.setFont(newFont);
-        labelRopaDeportiva.setForeground(newForegroundColor);
-        labelRopaDeportiva.setBackground(newBackgroundColor);
-        labelRopaDeportiva.setBorder(border);
-        labelRopaDeportiva.setHorizontalAlignment(SwingConstants.CENTER);
-        labelRopaDeportiva.setOpaque(true);
+        labelPrimero.setFont(newFont);
+        labelPrimero.setForeground(newForegroundColor);
+        labelPrimero.setBackground(newBackgroundColor);
+        labelPrimero.setBorder(border);
+        labelPrimero.setHorizontalAlignment(SwingConstants.CENTER);
+        labelPrimero.setOpaque(true);
 
-        labelCalzadoDeportivo.setFont(newFont);
-        labelCalzadoDeportivo.setForeground(newForegroundColor);
-        labelCalzadoDeportivo.setBackground(newBackgroundColor);
-        labelCalzadoDeportivo.setBorder(border);
-        labelCalzadoDeportivo.setHorizontalAlignment(SwingConstants.CENTER);
-        labelCalzadoDeportivo.setOpaque(true);
+        labelSegundo.setFont(newFont);
+        labelSegundo.setForeground(newForegroundColor);
+        labelSegundo.setBackground(newBackgroundColor);
+        labelSegundo.setBorder(border);
+        labelSegundo.setHorizontalAlignment(SwingConstants.CENTER);
+        labelSegundo.setOpaque(true);
 
-        labelRopa.setFont(newFont);
-        labelRopa.setForeground(newForegroundColor);
-        labelRopa.setBackground(newBackgroundColor);
-        labelRopa.setBorder(border);
-        labelRopa.setHorizontalAlignment(SwingConstants.CENTER);
-        labelRopa.setOpaque(true);
+        labelBatido.setFont(newFont);
+        labelBatido.setForeground(newForegroundColor);
+        labelBatido.setBackground(newBackgroundColor);
+        labelBatido.setBorder(border);
+        labelBatido.setHorizontalAlignment(SwingConstants.CENTER);
+        labelBatido.setOpaque(true);
 
-        labelAccesorios.setFont(newFont);
-        labelAccesorios.setForeground(newForegroundColor);
-        labelAccesorios.setBackground(newBackgroundColor);
-        labelAccesorios.setBorder(border);
-        labelAccesorios.setHorizontalAlignment(SwingConstants.CENTER);
-        labelAccesorios.setOpaque(true);
+        labelEntrante.setFont(newFont);
+        labelEntrante.setForeground(newForegroundColor);
+        labelEntrante.setBackground(newBackgroundColor);
+        labelEntrante.setBorder(border);
+        labelEntrante.setHorizontalAlignment(SwingConstants.CENTER);
+        labelEntrante.setOpaque(true);
 
-        labelRopaInterior.setFont(newFont);
-        labelRopaInterior.setForeground(newForegroundColor);
-        labelRopaInterior.setBackground(newBackgroundColor);
-        labelRopaInterior.setBorder(border);
-        labelRopaInterior.setHorizontalAlignment(SwingConstants.CENTER);
-        labelRopaInterior.setOpaque(true);
+      
 
 
-        labelCalzado.addMouseListener(new MouseAdapter() {
+        labelPostre.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 filtrarProductosPorCategoria("Calzado");
             }
         });
         
-        labelRopaDeportiva.addMouseListener(new MouseAdapter() {
+        labelPrimero.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 filtrarProductosPorCategoria("RopaDeportiva");
             }
         });
 
-        labelCalzadoDeportivo.addMouseListener(new MouseAdapter() {
+        labelSegundo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 filtrarProductosPorCategoria("CalzadoDeportivo");
             }
         });
 
-        labelRopa.addMouseListener(new MouseAdapter() {
+        labelBatido.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 filtrarProductosPorCategoria("Ropa");
             }
         });
 
-        labelAccesorios.addMouseListener(new MouseAdapter() {
+        labelEntrante.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 filtrarProductosPorCategoria("Accesorios");
             }
         });
 
-        labelRopaInterior.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                filtrarProductosPorCategoria("RopaInterior");
-            }
-        });
+       
 
         verTodo.addMouseListener(new MouseAdapter() {
             @Override
@@ -588,11 +575,11 @@ public class VentanaProductos extends JFrame {
         
         try {
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            List<Plato> articulos = convertirObjeto(response.body(), new TypeReference<List<Plato>>() { });
+            List<Plato> platos = convertirObjeto(response.body(), new TypeReference<List<Plato>>() { });
             todosLosPlatos = new ArrayList<>(platos);
             DefaultTableModel model = (DefaultTableModel) tablaProductos.getModel();
             model.setRowCount(0);
-            articulos.stream().forEach(plato -> {
+            platos.stream().forEach(plato -> {
                 ((DefaultTableModel) tablaProductos.getModel()).addRow(new Object[] {plato.getId(), plato.getNombre(), plato.getDescripcion(), plato.getPrecio(), plato.getTamano(), plato.getCategoria()});
             });
             this.tablaProductos.setModel((DefaultTableModel) tablaProductos.getModel());

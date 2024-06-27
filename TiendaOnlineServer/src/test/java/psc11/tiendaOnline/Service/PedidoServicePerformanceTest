@@ -1,14 +1,14 @@
 package psc11.tiendaOnline.Service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
-import java.util.List;
 
+import org.databene.contiperf.PerfTest;
+import org.databene.contiperf.Required;
+import org.databene.contiperf.junit.ContiPerfRule;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -21,7 +21,7 @@ import psc11.tiendaOnline.DataDomain.TipoUsuario;
 import psc11.tiendaOnline.DataDomain.Usuario;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PedidoServiceTest {
+public class PedidoServicePerformanceTest {
 
     private PedidoService pedidoService;
     @Mock
@@ -35,6 +35,8 @@ public class PedidoServiceTest {
     @Mock
     private Usuario usuario;
 
+    @Rule public ContiPerfRule rule = new ContiPerfRule();
+
     @Before
     public void setUp() {
         pedido = new Pedido(new Usuario(), Estado.Preparacion);
@@ -46,32 +48,37 @@ public class PedidoServiceTest {
     }
 
     @Test
+    @PerfTest(invocations = 500, threads = 10)
+    @Required(max = 1200, average = 250, throughput = 50, totalTime = 10000)
     public void testGetPedido() {
         pedido.setId(1);
         when(pedidoRepository.findById(1)).thenReturn(pedido);
         Pedido result = pedidoService.getPedido(1);
-        assertEquals(pedido, result);
     }
 
     @Test
+    @PerfTest(invocations = 500, threads = 10)
+    @Required(max = 1200, average = 250, throughput = 50, totalTime = 10000)
     public void testGetAllPedidos() {
         when(pedidoService.getAllPedidos()).thenReturn(Arrays.asList(pedido, pedido1));
-        List<Pedido> pedidos = pedidoService.getAllPedidos();
-        assertNotNull(pedidos);
+        pedidoService.getAllPedidos();
     }
 
     @Test
+    @PerfTest(invocations = 500, threads = 10)
+    @Required(max = 1200, average = 250, throughput = 50, totalTime = 10000)
     public void testAddPedido() {
         when(pedidoService.addPedido(any(Pedido.class))).thenReturn(pedido);
-        Pedido ped = pedidoService.addPedido(pedido);
-        assertNotNull(ped);
+        pedidoService.addPedido(pedido);
     }
 
     @Test
+    @PerfTest(invocations = 500, threads = 10)
+    @Required(max = 1200, average = 250, throughput = 50, totalTime = 10000)
     public void testUpdatePedido() {
         pedido.setEstado(Estado.Reparto);
         when(pedidoService.updatePedido(pedido, 1)).thenReturn(pedido);
-        Pedido result = pedidoService.updatePedido(pedido, 1);
-        assertEquals(Estado.Reparto, result.getEstado());
+        pedidoService.updatePedido(pedido, 1);
     }
 }
+

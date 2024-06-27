@@ -77,7 +77,7 @@ public class VentanaProductos extends JFrame {
 
         labelFiltroDineroMax = new JLabel("Filtrar por precio máximo");
         labelFiltroDineroMin = new JLabel("Filtrar por precio minimo");
-        labelFiltroTamano = new JLabel("Filtrar por tamaño");
+        labelFiltroTamano = new JLabel("Filtrar por categoria");
         
 
         // Agregar botones al panel

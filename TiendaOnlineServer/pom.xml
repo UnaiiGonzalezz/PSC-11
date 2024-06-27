@@ -19,7 +19,8 @@
         <java.version>17</java.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-    </properties>
+    	<sonar.host.url>http://your-sonarqube-server:9000</sonar.host.url>
+	</properties>
 
     <dependencies>
         <!-- Aquí puedes agregar las dependencias de tu proyecto -->

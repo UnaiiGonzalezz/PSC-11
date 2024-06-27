@@ -381,7 +381,7 @@ public class VentanaProductos extends JFrame {
                 // Mostrar el JComponent para editar el plato
                 int result = JOptionPane.showConfirmDialog(null, inputs, "Editar Plato", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
-                    final HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://127.0.0.1:8080/articulo/update?id=" + id + "&nombre=" + nombreField.getText() +"&desc=" + descripcionField.getText() + "&categoria=" + categoriaCombo.getSelectedItem().toString() + "&precio=" + precioSpinner.getValue() + "&tam="+tamañoField.getText())).build();
+                    final HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://127.0.0.1:8080/plato/update?id=" + id + "&nombre=" + nombreField.getText() +"&desc=" + descripcionField.getText() + "&categoria=" + categoriaCombo.getSelectedItem().toString() + "&precio=" + precioSpinner.getValue() + "&tam="+tamañoField.getText())).build();
                     try {
                         final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
                     } catch (IOException | InterruptedException e1) {
@@ -443,7 +443,7 @@ public class VentanaProductos extends JFrame {
                 Integer id = (Integer) tablaProductos.getValueAt(filaSeleccionada, 0);
 
 				if (filaSeleccionada != -1) {
-					final HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://127.0.0.1:8080/articulo/borrar?id=" + id)).build();
+					final HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://127.0.0.1:8080/plato/borrar?id=" + id)).build();
                     try {
                         final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
                         getProductos();
@@ -528,7 +528,7 @@ public class VentanaProductos extends JFrame {
 						JOptionPane.PLAIN_MESSAGE);
 				
 				if (result == JOptionPane.OK_OPTION) {
-					final HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://127.0.0.1:8080/articulo/crear?nombre=" + nombre_art.getText() +"&desc=" + desc_art.getText() + "&categoria=" + categoriaCombo.getSelectedItem().toString() + "&precio=" + precio.getValue() + "&tam="+tamaño.getText())).build();
+					final HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://127.0.0.1:8080/plato/crear?nombre=" + nombre_art.getText() +"&desc=" + desc_art.getText() + "&categoria=" + categoriaCombo.getSelectedItem().toString() + "&precio=" + precio.getValue() + "&tam="+tamaño.getText())).build();
                     try {
                         final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
                         getProductos();
@@ -571,7 +571,7 @@ public class VentanaProductos extends JFrame {
     }
 
     public void getProductos() { 
-        final HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://127.0.0.1:8080/articulo/all")).build();
+        final HttpRequest request = HttpRequest.newBuilder().GET().uri(URI.create("http://127.0.0.1:8080/plato/all")).build();
         
         try {
             final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());

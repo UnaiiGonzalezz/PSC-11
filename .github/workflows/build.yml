@@ -40,6 +40,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          cd Users\iker2\OneDrive\Documentos\GitHub\PSC-11\TiendaOnlineServer
+          pwd 
+          cd TiendaOnlineServer
+          pwd
           mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=IkerCortajarena_TiendaOnlineServer
 

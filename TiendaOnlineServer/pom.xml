@@ -20,8 +20,8 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <!-- Asegúrate de que esta URL sea correcta y accesible -->
-        <sonar.organization>UnaiiGonzalezz_PSC-11</sonar.organization>
-  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.organization>unaiigonzalezz</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
 
     <dependencies>

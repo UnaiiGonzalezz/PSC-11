@@ -29,7 +29,6 @@ public class PedidoService {
         this.pedidoRepository = pedidoRepository;
         this.platoService = platoService;
         this.connectionString = "jdbc:sqlite:TiendaOnline.db";
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         loadDatos();
     }
 

@@ -1,0 +1,12 @@
+Plato 1
+Nombre: patatas
+Cantidad: 1
+Precio: 2.0
+-------------------------
+Plato 2
+Nombre: alcachofa
+Cantidad: 1
+Precio: 3.0
+-------------------------
+Total: 5.0
+Fecha y hora: 2024-06-30 17:28:19

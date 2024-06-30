@@ -252,35 +252,35 @@ public class VentanaProductos extends JFrame {
         labelPostre.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                filtrarProductosPorCategoria("Calzado");
+                filtrarProductosPorCategoria("Postre");
             }
         });
         
         labelPrimero.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                filtrarProductosPorCategoria("RopaDeportiva");
+                filtrarProductosPorCategoria("Primero");
             }
         });
 
         labelSegundo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                filtrarProductosPorCategoria("CalzadoDeportivo");
+                filtrarProductosPorCategoria("Segundo");
             }
         });
 
         labelBatido.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                filtrarProductosPorCategoria("Ropa");
+                filtrarProductosPorCategoria("Batido");
             }
         });
 
         labelEntrante.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                filtrarProductosPorCategoria("Accesorios");
+                filtrarProductosPorCategoria("Entrante");
             }
         });
 

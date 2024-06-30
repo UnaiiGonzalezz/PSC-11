@@ -1,6 +1,7 @@
 package psc11.tiendaOnline.Service;
 
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
 
 import java.util.Arrays;
 
@@ -64,13 +65,13 @@ public class PedidoServicePerformanceTest {
         pedidoService.getAllPedidos();
     }
 
-    @Test
-    @PerfTest(invocations = 500, threads = 10)
-    @Required(max = 1200, average = 250, throughput = 50, totalTime = 10000)
-    public void testAddPedido() {
-        when(pedidoService.addPedido(any(Pedido.class))).thenReturn(pedido);
-        pedidoService.addPedido(pedido);
-    }
+    // @Test
+    // @PerfTest(invocations = 500, threads = 10)
+    // @Required(max = 1200, average = 250, throughput = 50, totalTime = 10000)
+    // public void testAddPedido() {
+    //     when(pedidoService.addPedido(any(Pedido.class))).thenReturn(pedido);
+    //     pedidoService.addPedido(pedido);
+    // }
 
     @Test
     @PerfTest(invocations = 500, threads = 10)

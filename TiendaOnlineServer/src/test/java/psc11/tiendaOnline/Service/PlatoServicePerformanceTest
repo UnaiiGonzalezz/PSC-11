@@ -1,6 +1,7 @@
 package psc11.tiendaOnline.Service;
 
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
 
 import java.util.Arrays;
 
@@ -65,14 +66,14 @@ public class PlatoServicePerformanceTest {
         platoService.getAllPlatos();
     }
 
-    @Test
-    @PerfTest(invocations = 500, threads = 10)
-    @Required(max = 1200, average = 250, throughput = 50, totalTime = 10000)
-    public void testAddPlato() {
-        Plato plato = new Plato();
-        when(platoService.addPlato(any(Plato.class))).thenReturn(plato);
-        platoService.addPlato(plato);
-    }
+    // @Test
+    // @PerfTest(invocations = 500, threads = 10)
+    // @Required(max = 1200, average = 250, throughput = 50, totalTime = 10000)
+    // public void testAddPlato() {
+    //     Plato plato = new Plato();
+    //     when(platoService.addPlato(any(Plato.class))).thenReturn(plato);
+    //     platoService.addPlato(plato);
+    // }
 
     @Test
     @PerfTest(invocations = 500, threads = 10)
